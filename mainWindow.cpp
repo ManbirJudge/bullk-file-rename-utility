@@ -1,7 +1,8 @@
 #include "mainWindow.h"
 #include "./ui_mainWindow.h"
 
-struct SelectedFile {
+struct SelectedFile
+{
     std::string filePath;
     std::string fileName;
     bool folder = false;
@@ -14,11 +15,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     // setting up directory model
     directoryModel->setRootPath("/");
     directoryModel->setFilter(QDir::Filters()
-                                        .setFlag(QDir::Dirs)
-                                       .setFlag(QDir::Drives)
-                                       .setFlag(QDir::NoDotAndDotDot)
-                                       .setFlag(QDir::AllDirs)
-                                      );
+                                  .setFlag(QDir::Dirs)
+                                  .setFlag(QDir::Drives)
+                                  .setFlag(QDir::NoDotAndDotDot)
+                                  .setFlag(QDir::AllDirs));
 
     ui->directoryTreeView->setModel(directoryModel);
 
@@ -43,7 +43,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->removeCropCombo->addItems(QStringList{"Before", "After"});
     ui->removeLeadDotsCombo->addItems(QStringList{"None", ".", "..", "Both"});
 
-
     ui->moveCopyPartsCombo_1->addItems(QStringList{"None", "Copy First n", "Copy Last n", "Move First n", "Move Last n"});
     ui->moveCopyPartsCombo_2->addItems(QStringList{"None", "To Start", "To End", "To Pos."});
 
@@ -55,13 +54,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     ui->numberingModeCombo->addItems(QStringList{"None", "Prefix", "Suffix", "Pre. + Suff.", "Insert"});
     ui->numberingTypeCombo->addItems(QStringList{
-                                         "Base 2 (Binary)", "Base 3", "Base 4", "Base 5", "Base 6", "Base 7",
-                                         "Base 8 (Octa)", "Base 9", "Base 10 (Decimal)", "Base 11", "Base 12",
-                                         "Base 13", "Base 14", "Base 15", "Base 16 (Hex)", "Base 17", "Base 18",
-                                         "Base 19", "Base 20", "Base 21", "Base 22", "Base 23", "Base 24",
-                                         "Base 25", "Base 26", "Base 27", "Base 28", "Base 29", "Base 30",
-                                         "Base 31", "Base 32", "Base 33", "Base 34", "Base 35", "Base 36",
-                                         "A-Z", "a-z", "Roman Numerals"});
+        "Base 2 (Binary)", "Base 3", "Base 4", "Base 5", "Base 6", "Base 7",
+        "Base 8 (Octa)", "Base 9", "Base 10 (Decimal)", "Base 11", "Base 12",
+        "Base 13", "Base 14", "Base 15", "Base 16 (Hex)", "Base 17", "Base 18",
+        "Base 19", "Base 20", "Base 21", "Base 22", "Base 23", "Base 24",
+        "Base 25", "Base 26", "Base 27", "Base 28", "Base 29", "Base 30",
+        "Base 31", "Base 32", "Base 33", "Base 34", "Base 35", "Base 36",
+        "A-Z", "a-z", "Roman Numerals"});
     ui->numberingTypeCombo->setCurrentIndex(8);
     ui->numberingCaseCombo->addItems(QStringList{"Same", "Lower", "Upper"});
 
@@ -72,32 +71,28 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
         ui->currentPathLineEdit,
         SIGNAL(returnPressed()),
         this,
-        SLOT(onCurrentLinePathEditReturnPressed())
-    );
-
+        SLOT(onCurrentLinePathEditReturnPressed()));
 
     connect(
         ui->directoryTreeView,
         SIGNAL(clicked(QModelIndex)),
         this,
-        SLOT(onDirectoryTreeViewClicked(QModelIndex))
-    );
+        SLOT(onDirectoryTreeViewClicked(QModelIndex)));
     connect(
         ui->currentDirectoryTable,
         SIGNAL(doubleClicked(QModelIndex)),
         this,
-        SLOT(onCurrentDirectoryTableDoubleClicked(QModelIndex))
-    );
+        SLOT(onCurrentDirectoryTableDoubleClicked(QModelIndex)));
 
     connect(
         ui->renameBtn,
         SIGNAL(clicked()),
         this,
-        SLOT(onRenameBtnCLicked())
-    );
+        SLOT(onRenameBtnCLicked()));
 }
 
-void MainWindow::onCurrentLinePathEditReturnPressed() {
+void MainWindow::onCurrentLinePathEditReturnPressed()
+{
     std::string newPath = ui->currentPathLineEdit->text().toStdString();
 
     if (pathExists(newPath) && isDir(newPath))
@@ -110,21 +105,25 @@ void MainWindow::onCurrentLinePathEditReturnPressed() {
 
         ui->currentDirectoryTable->setModel(new CurrentDirectoryTableModel(currentPath.c_str()));
     }
-    else {
+    else
+    {
         std::string currentPath = MainWindow::directoryModel->filePath(ui->directoryTreeView->currentIndex()).toStdString();
         ui->currentPathLineEdit->setText(QString(currentPath.c_str()));
     }
 }
-void MainWindow::onDirectoryTreeViewClicked(QModelIndex index) {
+void MainWindow::onDirectoryTreeViewClicked(QModelIndex index)
+{
     std::string currentPath = MainWindow::directoryModel->filePath(index).toStdString();
 
     ui->currentPathLineEdit->setText(QString(currentPath.c_str()));
     ui->currentDirectoryTable->setModel(new CurrentDirectoryTableModel(currentPath.c_str()));
 }
-void MainWindow::onCurrentDirectoryTableDoubleClicked(QModelIndex index) {
+void MainWindow::onCurrentDirectoryTableDoubleClicked(QModelIndex index)
+{
     std::string newPath = ui->currentDirectoryTable->model()->data(index, 2009).toString().toStdString();
 
-    if (isDir(newPath)) {
+    if (isDir(newPath))
+    {
         QModelIndex newPathIndex = MainWindow::directoryModel->index(QString(newPath.c_str()));
         std::string currentPath = MainWindow::directoryModel->filePath(newPathIndex).toStdString();
 
@@ -135,38 +134,42 @@ void MainWindow::onCurrentDirectoryTableDoubleClicked(QModelIndex index) {
     }
 }
 
-void MainWindow::onRenameBtnCLicked() {
+void MainWindow::onRenameBtnCLicked()
+{
     // getting the selected files paths
     QList<QModelIndex> selectedIndexes = ui->currentDirectoryTable->selectionModel()->selectedIndexes();
 
     std::vector<int> selectedRows;
     std::vector<SelectedFile> selectedFiles;
-    std::vector<std::string> renamedFiles;
+    std::vector<SelectedFile> renamedFiles;
 
-    for (QModelIndex selectedIndex : selectedIndexes) {
+    for (QModelIndex selectedIndex : selectedIndexes)
+    {
         selectedRows.push_back(selectedIndex.row());
 
         SelectedFile selectedFile;
 
         selectedFile.filePath = ui->currentDirectoryTable->model()->data(selectedIndex, 2009).toString().toStdString();
         selectedFile.fileName = selectedFile.filePath.substr(selectedFile.filePath.find_last_of('\\') + 1, selectedFile.filePath.length());
+        selectedFile.folder = isDir(selectedFile.filePath);
 
         selectedFiles.push_back(selectedFile);
     }
 
-    // getting rename options (from ui): TODO
+    // getting rename options (from ui)
     QString regexMatch = ui->regExMatchLineEdit->text();
     QString regexReplace = ui->regExReplaceLineEdit->text();
     bool regexIncludeExtension = ui->regExIncExtCheck->isChecked();
 
-    QString nameType = ui->nameTypeCombo->currentText();
+    int nameTypeIndex = ui->nameTypeCombo->currentIndex();
+    QString nameFixed = ui->fixedNameEdit->text();
 
     QString wordToReplace = ui->replaceLineEdit->text();
     QString wordToReplaceWith = ui->replaceWithLineEdit->text();
     bool replaceMatchCase = ui->replaceMathCaseCheck->isChecked();
     bool replaceFirst = ui->replaceFirstCheck->isChecked();
 
-    QString caseType = ui->caseTypeCombo->currentText();
+    int caseTypeIndex = ui->caseTypeCombo->currentIndex();
     QString caseException = ui->caseExceptionEdit->text();
 
     int removeFirstN = ui->removeFirstNSpin->value();
@@ -221,20 +224,143 @@ void MainWindow::onRenameBtnCLicked() {
     // calculating renamed file names
     int currentNumberingValue = numberingStart;
 
-    for (size_t i {}; i < selectedFiles.size(); i++)
+    std::regex fileRenameRegex(regexMatch.toStdString());
+
+    for (size_t i{}; i < selectedFiles.size(); i++)
     {
-        SelectedFile selectFile = selectedFiles.at(i);
+        SelectedFile selectedFile = selectedFiles.at(i);
+
+        if (selectedFile.folder) {
+            // TODO: Implement renaming of folders too
+            continue;
+        }
 
         // ---------- (1) Regex
+        std::string name = selectedFile.fileName.substr(0, selectedFile.fileName.find_last_of('.'));
+        std::string ext = selectedFile.fileName.substr(selectedFile.fileName.find_last_of('.'), -1);
+
+        if (regexIncludeExtension)
+        {
+            std::regex_replace(selectedFile.fileName, fileRenameRegex, regexReplace.toStdString());
+        }
+        else
+        {
+            std::regex_replace(name, fileRenameRegex, regexReplace.toStdString());
+            selectedFile.fileName = name + ext;
+        }
 
         // ---------- (2) Name
+        name = selectedFile.fileName.substr(0, selectedFile.fileName.find_last_of('.'));
+        ext = selectedFile.fileName.substr(selectedFile.fileName.find_last_of('.'), -1);
+
+        switch (nameTypeIndex)
+        {
+        case 0:
+            break;
+
+        case 1:
+            selectedFile.fileName = ext;
+            break;
+
+        case 2:
+            selectedFile.fileName = nameFixed.toStdString() + ext;
+            break;
+
+        case 3:
+            std::reverse(name.begin(), name.end());
+            selectedFile.fileName = name + ext;
+            break;
+        }
+
+        // ---------- (3) Replace
+
+        // ---------- (4) Case
+        name = selectedFile.fileName.substr(0, selectedFile.fileName.find_last_of('.'));
+        ext = selectedFile.fileName.substr(selectedFile.fileName.find_last_of('.'), -1);
+
+        switch (caseTypeIndex)
+        {
+        case 0:
+        {
+            break;
+        }
+        case 1:
+        {
+            // --------- IDK ---------
+            char *tempName = strdup(name.c_str());
+            unsigned char *tptr = (unsigned char *) tempName;
+            while (*tptr)
+            {
+                *tptr = std::tolower(*tptr);
+                tptr++;
+            }
+            // ----------------------
+
+            selectedFile.fileName = std::string(tempName) + ext;
+            free(tempName);
+            break;
+        }
+
+        case 2:
+        {
+
+            // --------- IDK ---------
+            char *tempName = strdup(name.c_str());
+            unsigned char *tptr = (unsigned char *) tempName;
+            while (*tptr)
+            {
+                *tptr = std::toupper(*tptr);
+                tptr++;
+            }
+            // ----------------------
+
+            selectedFile.fileName = std::string(tempName) + ext;
+            free(tempName);
+
+            break;
+        }
+        case 3:
+        {
+            // TODO: Implement title case
+            break;
+        }
+        case 4:
+        {
+            // TODO: Implement sentence case
+            break;
+        }
+        case 5:
+        {
+            // TODO: Implement enhancded sentence case
+            break;
+        }
+        }
+
+        // ---------- (5) Remove
+
+        // ---------- (6) Move/copy parts
+
+        // ---------- (7) Add
+
+        // ---------- (8) Autodate
+
+        // ---------- (9) Append folder name
+
+        // ---------- (10) Numbering
+
+        // ---------- (11) Extension
+
+        // adding file to renamed files list
+        renamedFiles.push_back(selectedFile);
     }
 
     // actualling renaming the files in the system: TODO
+    for (size_t i{}; i < renamedFiles.size(); i++) {
+        qDebug() << renamedFiles[i].filePath.c_str() << " -> " << renamedFiles[i].fileName.c_str();
+    }
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
 }
-

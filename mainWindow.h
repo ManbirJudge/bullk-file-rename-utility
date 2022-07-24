@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QtCore/QDir>
 #include <QtWidgets/qfilesystemmodel.h>
+#include <regex>
 
 #include "currentDirectoryTableModel.h"
 #include "Utils.h"

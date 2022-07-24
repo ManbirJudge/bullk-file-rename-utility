@@ -10,8 +10,6 @@ CurrentDirectoryTableModel::CurrentDirectoryTableModel(const char *_path) : QAbs
 void CurrentDirectoryTableModel::setPath(const char *path) {
     CurrentDirectoryTableModel::path = path;
 
-    std::cout << "New path: " << path << std::endl;
-
     CurrentDirectoryTableModel::files.clear();
     CurrentDirectoryTableModel::_data.clear();
 
