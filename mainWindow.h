@@ -6,6 +6,7 @@
 #include <QtWidgets/qfilesystemmodel.h>
 
 #include "currentDirectoryTableModel.h"
+#include "Utils.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -36,7 +37,7 @@ public slots:
     void onCurrentLinePathEditReturnPressed();
 
     void onDirectoryTreeViewClicked(QModelIndex index);
-    void onCurrentDirectoryDoubleClicked(QModelIndex index);
+    void onCurrentDirectoryTableDoubleClicked(QModelIndex index);
 
 private:
     QFileSystemModel *directoryModel = new QFileSystemModel();

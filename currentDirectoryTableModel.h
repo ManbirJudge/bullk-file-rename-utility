@@ -10,14 +10,11 @@
 #include <sys/stat.h>
 #include <QAbstractFileIconProvider>
 
+#include "Utils.h"
+
 namespace fs = std::filesystem;
 
-std::string getStringTime(long long time_, std::string format);
-std::string getStringTime(long long time_, const char *format);
-
-class FileIconProvider : public QAbstractFileIconProvider {
-
-};
+class FileIconProvider : public QAbstractFileIconProvider {};
 
 class CurrentDirectoryTableModel : public QAbstractTableModel
 {
@@ -26,6 +23,7 @@ class CurrentDirectoryTableModel : public QAbstractTableModel
 private:
     const std::vector<QString> columns = std::vector<QString>{"Name", "Size", "Created", "Modified", "Accessed", "Status"};
     std::vector<std::vector<QString>> _data;
+
     const FileIconProvider fileIconProvider = FileIconProvider();
 
 public:

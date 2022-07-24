@@ -1,25 +1,9 @@
 #include "mainWindow.h"
 #include "./ui_mainWindow.h"
 
-bool pathExists(const std::string path)
-{
-    struct stat buffer;
-    return (stat (path.c_str(), &buffer) == 0);
-}
-
-bool isDir(const std::string path) {
-    struct stat buffer;
-    stat(path.c_str(), &buffer);
-
-    return buffer.st_mode & S_IFDIR;
-}
-
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
-    // setting up data
-
 
     // setting up directory model
     directoryModel->setRootPath("/");
@@ -77,8 +61,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     ui->extensionCombo->addItems(QStringList{"Same", "Lower", "Upper", "Title", "Fixed", "Extra", "Remove"});
 
-    // debugging
-
     // setting up signals
     connect(
         ui->currentPathLineEdit,
@@ -98,7 +80,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
         ui->currentDirectoryTable,
         SIGNAL(doubleClicked(QModelIndex)),
         this,
-        SLOT(onCurrentDirectoryDoubleClicked(QModelIndex))
+        SLOT(onCurrentDirectoryTableDoubleClicked(QModelIndex))
     );
 }
 
@@ -120,15 +102,13 @@ void MainWindow::onCurrentLinePathEditReturnPressed() {
         ui->currentPathLineEdit->setText(QString(currentPath.c_str()));
     }
 }
-
 void MainWindow::onDirectoryTreeViewClicked(QModelIndex index) {
     std::string currentPath = MainWindow::directoryModel->filePath(index).toStdString();
 
     ui->currentPathLineEdit->setText(QString(currentPath.c_str()));
     ui->currentDirectoryTable->setModel(new CurrentDirectoryTableModel(currentPath.c_str()));
 }
-
-void MainWindow::onCurrentDirectoryDoubleClicked(QModelIndex index) {
+void MainWindow::onCurrentDirectoryTableDoubleClicked(QModelIndex index) {
     std::string newPath = ui->currentDirectoryTable->model()->data(index, 2009).toString().toStdString();
 
     if (isDir(newPath)) {

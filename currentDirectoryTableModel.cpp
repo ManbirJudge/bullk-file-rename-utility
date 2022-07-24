@@ -1,24 +1,5 @@
 #include "currentDirectoryTableModel.h"
 
-std::string getStringTime(long long time_, std::string format) {
-    time_t time {time_};
-    auto localTime = *std::localtime(&time);
-
-    std::stringstream ss;
-    ss << std::put_time(&localTime, format.c_str());
-
-    return ss.str();
-}
-std::string getStringTime(long long time_, const char *format) {
-    time_t time {time_};
-    auto localTime = *std::localtime(&time);
-
-    std::stringstream ss;
-    ss << std::put_time(&localTime, format);
-
-    return ss.str();
-}
-
 CurrentDirectoryTableModel::CurrentDirectoryTableModel() : QAbstractTableModel(0) {
 
 };
@@ -88,7 +69,6 @@ QVariant CurrentDirectoryTableModel::data(const QModelIndex &index, int role) co
 
             if (index.column() == 0)
             {
-                // TODO: Implement file icons
                 return fileIconProvider.icon(QFileInfo(QString(files[index.row()].c_str())));
             }
             else if (index.column() == 5)
@@ -138,11 +118,9 @@ QVariant CurrentDirectoryTableModel::data(const QModelIndex &index, int role) co
 int CurrentDirectoryTableModel::rowCount(const QModelIndex &index) const {
     return CurrentDirectoryTableModel::_data.size();
 }
-
 int CurrentDirectoryTableModel::columnCount(const QModelIndex &index) const {
     return CurrentDirectoryTableModel::columns.size();
 }
-
 QVariant CurrentDirectoryTableModel::headerData(int section, Qt::Orientation orientation, int role) const {
     if (role == Qt::DisplayRole) {
         if (orientation == Qt::Horizontal) {
