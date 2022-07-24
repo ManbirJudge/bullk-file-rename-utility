@@ -1,0 +1,1674 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1166</width>
+    <height>776</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Bulk Rename App</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,2,3">
+    <item>
+     <widget class="QLabel" name="titleLabel">
+      <property name="styleSheet">
+       <string notr="true">padding: 5px 7px;
+
+                                background-color: #4d6081;
+                                color: white;
+
+                                font-size: 20px;
+                            </string>
+      </property>
+      <property name="text">
+       <string>Bulk Rename Utility</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="currentPathLaout">
+      <item>
+       <widget class="QPushButton" name="currentPathLevelUpBtn">
+        <property name="text">
+         <string>Up Folder</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="currentPathLineEdit"/>
+      </item>
+      <item>
+       <widget class="QPushButton" name="currentPathBrowseBtn">
+        <property name="text">
+         <string>Browse</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="fileSystemLayout" stretch="1,3">
+      <item>
+       <widget class="QTreeView" name="directoryTreeView">
+        <property name="animated">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QTreeView" name="currentDirectoryTable">
+        <property name="sortingEnabled">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QVBoxLayout" name="controlsLayout" stretch="2,0,1,1">
+      <item>
+       <layout class="QHBoxLayout" name="controlLayout1">
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_2">
+          <item>
+           <widget class="QGroupBox" name="regExBox">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="title">
+             <string>RegEx (1)</string>
+            </property>
+            <property name="flat">
+             <bool>false</bool>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+            <layout class="QGridLayout" name="gridLayout">
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_2">
+               <property name="text">
+                <string>Replace</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0">
+              <widget class="QLabel" name="label">
+               <property name="text">
+                <string>Match</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QLineEdit" name="regExReplaceLineEdit"/>
+             </item>
+             <item row="0" column="1">
+              <widget class="QLineEdit" name="regExMatchLineEdit"/>
+             </item>
+             <item row="2" column="0" colspan="2">
+              <layout class="QHBoxLayout" name="horizontalLayout">
+               <item>
+                <widget class="QCheckBox" name="regExIncExtCheck">
+                 <property name="enabled">
+                  <bool>true</bool>
+                 </property>
+                 <property name="text">
+                  <string>Inc. Ext.</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QCheckBox" name="regExSimpleCheck">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
+                 <property name="text">
+                  <string>Simple</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QCheckBox" name="regExv2CheckBox">
+                 <property name="enabled">
+                  <bool>true</bool>
+                 </property>
+                 <property name="text">
+                  <string>v2</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QGroupBox" name="nameBox">
+            <property name="title">
+             <string>Name (2)</string>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_11">
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_12">
+               <property name="text">
+                <string>Name</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QComboBox" name="nameTypeCombo"/>
+             </item>
+             <item row="1" column="1">
+              <widget class="QLineEdit" name="fixedNameEdit"/>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_4">
+          <item>
+           <widget class="QGroupBox" name="replaceBox">
+            <property name="title">
+             <string>Replace (3)</string>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_2">
+             <item row="1" column="1">
+              <widget class="QLineEdit" name="replaceWithLineEdit"/>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_4">
+               <property name="text">
+                <string>With</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_3">
+               <property name="text">
+                <string>Replace</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QLineEdit" name="replaceLineEdit"/>
+             </item>
+             <item row="2" column="0" colspan="2">
+              <layout class="QHBoxLayout" name="horizontalLayout_2">
+               <item>
+                <widget class="QCheckBox" name="replaceMathCaseCheck">
+                 <property name="text">
+                  <string>Match Case</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QCheckBox" name="replaceFirstCheck">
+                 <property name="text">
+                  <string>First</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QGroupBox" name="caseBox">
+            <property name="title">
+             <string>Case (4)</string>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_12">
+             <item row="0" column="0" colspan="2">
+              <widget class="QComboBox" name="caseTypeCombo"/>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_45">
+               <property name="text">
+                <string>Excep.</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QLineEdit" name="caseExceptionEdit"/>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="removeBox">
+          <property name="title">
+           <string>Remove (5)</string>
+          </property>
+          <property name="flat">
+           <bool>false</bool>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_3">
+           <item>
+            <layout class="QGridLayout" name="gridLayout_3">
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_7">
+               <property name="text">
+                <string>Chars</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_6">
+               <property name="text">
+                <string>From</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLabel" name="label_8">
+               <property name="text">
+                <string>Crop</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <widget class="QComboBox" name="removeCropCombo"/>
+             </item>
+             <item row="0" column="2">
+              <widget class="QLabel" name="label_9">
+               <property name="text">
+                <string>Last n</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QSpinBox" name="removeFirstNSpin"/>
+             </item>
+             <item row="2" column="1">
+              <widget class="QLineEdit" name="removeCharsLineEdit"/>
+             </item>
+             <item row="1" column="2">
+              <widget class="QLabel" name="label_10">
+               <property name="text">
+                <string>to</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="2">
+              <widget class="QLabel" name="label_11">
+               <property name="text">
+                <string>Words</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QSpinBox" name="removeFromSpin"/>
+             </item>
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_5">
+               <property name="text">
+                <string>First n</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="3">
+              <widget class="QSpinBox" name="removeLastNSpin"/>
+             </item>
+             <item row="1" column="3">
+              <widget class="QSpinBox" name="removeToSpin"/>
+             </item>
+             <item row="2" column="3">
+              <widget class="QLineEdit" name="removeWordsLineEdit"/>
+             </item>
+             <item row="3" column="3">
+              <widget class="QLineEdit" name="removeCropEdit"/>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QGridLayout" name="gridLayout_4">
+             <item row="0" column="2">
+              <widget class="QCheckBox" name="removeTrimCheck">
+               <property name="text">
+                <string>Trim</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="QLabel" name="label_46">
+               <property name="text">
+                <string>Lead Dots</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QCheckBox" name="removeSymbolsCheck">
+               <property name="text">
+                <string>Sym</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QCheckBox" name="removeDSCheck">
+               <property name="text">
+                <string>D/S</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0">
+              <widget class="QCheckBox" name="removeDigitsCheck">
+               <property name="text">
+                <string>Digits</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="2">
+              <widget class="QCheckBox" name="removeCharsCheck">
+               <property name="text">
+                <string>Chars</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="2">
+              <widget class="QComboBox" name="removeLeadDotsCombo"/>
+             </item>
+             <item row="1" column="1">
+              <widget class="QCheckBox" name="removeAccentCheck">
+               <property name="text">
+                <string>Accents</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QCheckBox" name="removeHighCheck">
+               <property name="text">
+                <string>High</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="addBox">
+          <property name="title">
+           <string>Add (7)</string>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_5">
+           <item row="1" column="1">
+            <widget class="QLineEdit" name="addInsertEdit"/>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="label_15">
+             <property name="text">
+              <string>at pos.</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QLineEdit" name="addSuffixEdit"/>
+           </item>
+           <item row="3" column="0">
+            <widget class="QLabel" name="label_16">
+             <property name="text">
+              <string>Suffix</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="0" colspan="2">
+            <widget class="QCheckBox" name="addWordSpaceCheck">
+             <property name="text">
+              <string>Word Space</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QLineEdit" name="addPrefixEdit"/>
+           </item>
+           <item row="2" column="1">
+            <widget class="QSpinBox" name="addAtPosSpin"/>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_14">
+             <property name="text">
+              <string>Insert</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_13">
+             <property name="text">
+              <string>Prefix</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="autoDateBox">
+          <property name="title">
+           <string>Auto Date (8)</string>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_6">
+           <item row="4" column="3" colspan="3">
+            <widget class="QLineEdit" name="autoDateCustomEdit"/>
+           </item>
+           <item row="3" column="3">
+            <widget class="QLineEdit" name="autoDateSepEdit"/>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_18">
+             <property name="text">
+              <string>Type</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0">
+            <widget class="QLabel" name="label_20">
+             <property name="text">
+              <string>Sep.</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="5">
+            <widget class="QLineEdit" name="autoDateSegEdit"/>
+           </item>
+           <item row="4" column="0">
+            <widget class="QLabel" name="label_21">
+             <property name="text">
+              <string>Custom</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="3" colspan="3">
+            <widget class="QComboBox" name="autoDateModeCombo"/>
+           </item>
+           <item row="3" column="4">
+            <widget class="QLabel" name="label_22">
+             <property name="text">
+              <string>Seg.</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="3" colspan="3">
+            <widget class="QComboBox" name="autoDateTypeCombo"/>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="label_19">
+             <property name="text">
+              <string>Fmt.</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_17">
+             <property name="text">
+              <string>Mode</string>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="3">
+            <widget class="QLabel" name="label_23">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>Off.</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="0">
+            <widget class="QCheckBox" name="autoDateCentCheck">
+             <property name="text">
+              <string>Cent.</string>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="4" colspan="2">
+            <widget class="QSpinBox" name="autoDateOffSpin">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="3" colspan="3">
+            <layout class="QHBoxLayout" name="horizontalLayout_7">
+             <item>
+              <widget class="QComboBox" name="autoDateFmtCombo"/>
+             </item>
+             <item>
+              <widget class="QToolButton" name="autoDateFmtHelpBtn">
+               <property name="text">
+                <string>...</string>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normalon>C:/Users/manbi/Downloads/help.png</normalon>
+                </iconset>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="numberingBox">
+          <property name="title">
+           <string>Numbering (10)</string>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_7">
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_25">
+             <property name="text">
+              <string>Start</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="3">
+            <widget class="QSpinBox" name="numberingAtSpin"/>
+           </item>
+           <item row="1" column="2">
+            <widget class="QLabel" name="label_31">
+             <property name="text">
+              <string>Incr.</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="3">
+            <widget class="QLineEdit" name="numberingSepEdit"/>
+           </item>
+           <item row="3" column="2" colspan="2">
+            <widget class="QCheckBox" name="numberingFolderCheck">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>Folders</string>
+             </property>
+             <property name="tristate">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="2">
+            <widget class="QLabel" name="label_30">
+             <property name="text">
+              <string>at</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0">
+            <widget class="QLabel" name="label_27">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>Break</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QSpinBox" name="numberingStartSpin">
+             <property name="value">
+              <number>1</number>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="0">
+            <widget class="QLabel" name="label_28">
+             <property name="text">
+              <string>Type</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="label_26">
+             <property name="text">
+              <string>Pad</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QSpinBox" name="numberingBreakSpin">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="2">
+            <widget class="QLabel" name="label_32">
+             <property name="text">
+              <string>Sep.</string>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="0">
+            <widget class="QLabel" name="label_29">
+             <property name="text">
+              <string>Case</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QComboBox" name="numberingModeCombo"/>
+           </item>
+           <item row="2" column="1">
+            <widget class="QSpinBox" name="numberingPadSpin"/>
+           </item>
+           <item row="1" column="3">
+            <widget class="QSpinBox" name="numberingIncrSpin">
+             <property name="value">
+              <number>1</number>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_24">
+             <property name="text">
+              <string>Mode</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="1" colspan="3">
+            <widget class="QComboBox" name="numberingTypeCombo"/>
+           </item>
+           <item row="5" column="1" colspan="3">
+            <widget class="QComboBox" name="numberingCaseCombo"/>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="controlLayout2">
+        <item>
+         <widget class="QGroupBox" name="moveCopyPartsBox">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="title">
+           <string>Move / Copy Parts (6)</string>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_5">
+           <item>
+            <widget class="QComboBox" name="moveCopyPartsCombo_1"/>
+           </item>
+           <item>
+            <widget class="QSpinBox" name="moveCopyPartsSpin_1">
+             <property name="minimum">
+              <number>1</number>
+             </property>
+             <property name="value">
+              <number>1</number>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QComboBox" name="moveCopyPartsCombo_2"/>
+           </item>
+           <item>
+            <widget class="QSpinBox" name="moveCopyPartsSpin_2">
+             <property name="minimum">
+              <number>1</number>
+             </property>
+             <property name="value">
+              <number>1</number>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_33">
+             <property name="text">
+              <string>Sep.</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="moveCopyPartsSepEdit"/>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="appendFolderNameBox">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="title">
+           <string>Append Folder Name (9)</string>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_3">
+           <item>
+            <widget class="QLabel" name="label_34">
+             <property name="text">
+              <string>Name</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QComboBox" name="appendFolderNameCombo"/>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_35">
+             <property name="text">
+              <string>Sep.</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="appendFolderNameSepEdit"/>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_36">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>Levels</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QSpinBox" name="appendFolderNameLevelsSpin">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="value">
+              <number>1</number>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="extensionBox">
+          <property name="title">
+           <string>Extension (11)</string>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_6">
+           <item>
+            <widget class="QComboBox" name="extensionCombo"/>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="extensionEdit"/>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="controlLayout3" stretch="4,3">
+        <item>
+         <widget class="QGroupBox" name="filtersBox">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="title">
+           <string>Filters (12)</string>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_8">
+           <item row="1" column="1">
+            <widget class="QCheckBox" name="checkBox_16">
+             <property name="text">
+              <string>Math Case</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="9">
+            <widget class="QLabel" name="label_38">
+             <property name="text">
+              <string>Path Min</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="4">
+            <widget class="QCheckBox" name="checkBox_17">
+             <property name="text">
+              <string>Folders</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="2">
+            <widget class="QCheckBox" name="checkBox_15">
+             <property name="text">
+              <string>RegEx</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="14">
+            <widget class="QSpinBox" name="spinBox_18"/>
+           </item>
+           <item row="0" column="3">
+            <widget class="QToolButton" name="toolButton_2">
+             <property name="text">
+              <string>...</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="13" rowspan="2">
+            <widget class="QLabel" name="label_39">
+             <property name="text">
+              <string>Max</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="4" colspan="10">
+            <widget class="QLineEdit" name="lineEdit_18"/>
+           </item>
+           <item row="1" column="5" rowspan="2" colspan="2">
+            <widget class="QCheckBox" name="checkBox_14">
+             <property name="text">
+              <string>Subfolders</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="14" rowspan="2">
+            <widget class="QSpinBox" name="spinBox_16"/>
+           </item>
+           <item row="0" column="11">
+            <widget class="QSpinBox" name="spinBox_17"/>
+           </item>
+           <item row="1" column="7">
+            <widget class="QLabel" name="label_40">
+             <property name="text">
+              <string>Lvl</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="4" rowspan="2">
+            <widget class="QCheckBox" name="checkBox_13">
+             <property name="text">
+              <string>Files</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="11">
+            <widget class="QSpinBox" name="spinBox_15"/>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_37">
+             <property name="text">
+              <string>Mask</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1" colspan="2">
+            <widget class="QLineEdit" name="lineEdit_16"/>
+           </item>
+           <item row="3" column="14">
+            <widget class="QToolButton" name="toolButton_3">
+             <property name="text">
+              <string>...</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="9">
+            <widget class="QLabel" name="label_41">
+             <property name="text">
+              <string>Name Min</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="5">
+            <widget class="QCheckBox" name="checkBox_18">
+             <property name="text">
+              <string>Hidden</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QToolButton" name="toolButton">
+             <property name="text">
+              <string>...</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="8" rowspan="2">
+            <widget class="QLineEdit" name="lineEdit_17">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="13">
+            <widget class="QLabel" name="label_42">
+             <property name="text">
+              <string>Max</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="3">
+            <widget class="QLabel" name="label_43">
+             <property name="text">
+              <string>Condition</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="copyMoveToLocationBox">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="title">
+           <string>Copy/Move to Location (13)</string>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_9">
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_44">
+             <property name="text">
+              <string>Path</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QLineEdit" name="copyMoveToLocationPathEdit"/>
+           </item>
+           <item row="0" column="2">
+            <widget class="QToolButton" name="copyMoveToLocationPathBrowseBtn">
+             <property name="text">
+              <string>...</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QCheckBox" name="copyMoveToLocationCopyCheck">
+             <property name="text">
+              <string>Copy not Move</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="controlLayout4">
+        <item>
+         <widget class="QGroupBox" name="specialBox">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="title">
+           <string>Special (14)</string>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_10">
+           <item row="0" column="0">
+            <widget class="QCheckBox" name="specialChangeFileCheck_1">
+             <property name="text">
+              <string>Change File</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QCheckBox" name="specialChangeFileCheck_2">
+             <property name="text">
+              <string>Change File</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="2">
+            <widget class="QCheckBox" name="specialCharacterCheck">
+             <property name="text">
+              <string>Character</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="3">
+            <widget class="QCheckBox" name="specialJSCheck">
+             <property name="text">
+              <string>Javascript</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="specialChangeFileStatus_1">
+             <property name="text">
+              <string>Status: Not Set</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QLabel" name="specialChangeFileStatus_2">
+             <property name="text">
+              <string>Status: Not Set</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="2">
+            <widget class="QLabel" name="specialCharacterStatus">
+             <property name="text">
+              <string>Status: Not Set</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="3">
+            <widget class="QLabel" name="specialJSStatus">
+             <property name="text">
+              <string>Status: Not Set</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_4">
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_5">
+            <item>
+             <widget class="QPushButton" name="fileSelectionModeBtn">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>_</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="howToUseBtn">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>?</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_8">
+            <item>
+             <widget class="QPushButton" name="previewBtn">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>Preview</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="resetBtn">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>Reset</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="revertBtn">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>Revert</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QPushButton" name="renameBtn">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Rename</string>
+            </property>
+            <property name="checkable">
+             <bool>false</bool>
+            </property>
+            <property name="autoDefault">
+             <bool>false</bool>
+            </property>
+            <property name="default">
+             <bool>false</bool>
+            </property>
+            <property name="flat">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1166</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="defaultUp">
+    <bool>false</bool>
+   </property>
+   <property name="nativeMenuBar">
+    <bool>true</bool>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <widget class="QMenu" name="menuFavourties">
+     <property name="title">
+      <string>Favourties</string>
+     </property>
+     <addaction name="actionSave_on_Exit"/>
+     <addaction name="actionSelect_Pathname"/>
+     <addaction name="separator"/>
+     <addaction name="actionEmpty"/>
+    </widget>
+    <widget class="QMenu" name="menuRecent">
+     <property name="title">
+      <string>Recent</string>
+     </property>
+     <addaction name="actionEmpty_2"/>
+    </widget>
+    <addaction name="actionNew"/>
+    <addaction name="actionOpen"/>
+    <addaction name="actionSave"/>
+    <addaction name="actionSave_As"/>
+    <addaction name="separator"/>
+    <addaction name="menuRecent"/>
+    <addaction name="separator"/>
+    <addaction name="menuFavourties"/>
+    <addaction name="separator"/>
+    <addaction name="actionExit"/>
+   </widget>
+   <widget class="QMenu" name="menuActions">
+    <property name="title">
+     <string>Actions</string>
+    </property>
+    <addaction name="actionSelect_All"/>
+    <addaction name="actionDeselect_All"/>
+    <addaction name="actionInvert_Selection"/>
+    <addaction name="actionSelect_from_Clipboard"/>
+    <addaction name="separator"/>
+    <addaction name="actionJump_to_Path"/>
+    <addaction name="separator"/>
+    <addaction name="actionRename_Object_Manually"/>
+    <addaction name="separator"/>
+    <addaction name="actionRefresh_Files"/>
+    <addaction name="actionRefresh_Tree"/>
+    <addaction name="actionShow_Hide_Tree"/>
+    <addaction name="actionZoom"/>
+    <addaction name="separator"/>
+    <addaction name="actionList"/>
+    <addaction name="separator"/>
+    <addaction name="actionImport_Renaem_Pairs"/>
+    <addaction name="separator"/>
+    <addaction name="actionDebug_New_Name"/>
+    <addaction name="separator"/>
+    <addaction name="actionReset_All_Remaining_Criteria"/>
+    <addaction name="actionRevert_All_Criteria_to_Last_Saved"/>
+    <addaction name="actionPreview"/>
+    <addaction name="actionRename"/>
+    <addaction name="separator"/>
+    <addaction name="actionUndo_Rename"/>
+    <addaction name="actionCreate_Undo_Batchfile"/>
+   </widget>
+   <widget class="QMenu" name="menuDisplay_Options">
+    <property name="title">
+     <string>Display Options</string>
+    </property>
+    <widget class="QMenu" name="menuList">
+     <property name="title">
+      <string>List</string>
+     </property>
+     <widget class="QMenu" name="menuShow_File_Sizes_as">
+      <property name="title">
+       <string>Show File Sizes as ...</string>
+      </property>
+      <addaction name="actionBytes"/>
+      <addaction name="actionKilobytes"/>
+      <addaction name="actionMegabytes"/>
+      <addaction name="actionGigabytes"/>
+      <addaction name="actionMixed"/>
+     </widget>
+     <addaction name="actionShow_Gridlines"/>
+     <addaction name="actionShow_Icons"/>
+     <addaction name="menuShow_File_Sizes_as"/>
+     <addaction name="actionShow_Picture_Viewer"/>
+     <addaction name="separator"/>
+     <addaction name="actionSelect_Columns"/>
+     <addaction name="actionAutofill_All_Columns"/>
+     <addaction name="actionSet_Content_of_Custom_Column"/>
+     <addaction name="separator"/>
+     <addaction name="actionExpand_File_List"/>
+     <addaction name="actionMaximize_File_List"/>
+    </widget>
+    <widget class="QMenu" name="menuColours">
+     <property name="title">
+      <string>Colours</string>
+     </property>
+     <addaction name="actionNew_Name_OK"/>
+     <addaction name="actionNew_Name_Invalid"/>
+     <addaction name="actionActive_Criteria"/>
+     <addaction name="actionHighlish_Active_Criteria"/>
+    </widget>
+    <widget class="QMenu" name="menuFont">
+     <property name="title">
+      <string>Font</string>
+     </property>
+     <addaction name="actionUse_Larger_Font"/>
+     <addaction name="actionUse_Smaller_Font"/>
+     <addaction name="actionReset"/>
+    </widget>
+    <widget class="QMenu" name="menuSorting">
+     <property name="title">
+      <string>Sorting</string>
+     </property>
+     <addaction name="actionLogical_Sorting"/>
+     <addaction name="actionGroup_Affected_Files"/>
+     <addaction name="actionSort_Files_and_Folders_Together"/>
+    </widget>
+    <addaction name="menuList"/>
+    <addaction name="menuColours"/>
+    <addaction name="menuFont"/>
+    <addaction name="separator"/>
+    <addaction name="menuSorting"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuActions"/>
+   <addaction name="menuDisplay_Options"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionNew">
+   <property name="text">
+    <string>New</string>
+   </property>
+  </action>
+  <action name="actionOpen">
+   <property name="text">
+    <string>Open</string>
+   </property>
+  </action>
+  <action name="actionSave">
+   <property name="text">
+    <string>Save</string>
+   </property>
+  </action>
+  <action name="actionSave_As">
+   <property name="text">
+    <string>Save As</string>
+   </property>
+  </action>
+  <action name="actionExit">
+   <property name="text">
+    <string>Exit</string>
+   </property>
+  </action>
+  <action name="actionSelect_All">
+   <property name="text">
+    <string>Select All</string>
+   </property>
+  </action>
+  <action name="actionDeselect_All">
+   <property name="text">
+    <string>Deselect All</string>
+   </property>
+  </action>
+  <action name="actionInvert_Selection">
+   <property name="text">
+    <string>Invert Selection</string>
+   </property>
+  </action>
+  <action name="actionSelect_from_Clipboard">
+   <property name="text">
+    <string>Select from Clipboard</string>
+   </property>
+  </action>
+  <action name="actionJump_to_Path">
+   <property name="text">
+    <string>Jump to Path</string>
+   </property>
+  </action>
+  <action name="actionRename_Object_Manually">
+   <property name="text">
+    <string>Rename Object Manually</string>
+   </property>
+  </action>
+  <action name="actionRefresh_Files">
+   <property name="text">
+    <string>Refresh Files</string>
+   </property>
+  </action>
+  <action name="actionRefresh_Tree">
+   <property name="text">
+    <string>Refresh Tree</string>
+   </property>
+  </action>
+  <action name="actionShow_Hide_Tree">
+   <property name="text">
+    <string>Show/Hide Tree</string>
+   </property>
+  </action>
+  <action name="actionZoom">
+   <property name="text">
+    <string>Zoom ...</string>
+   </property>
+  </action>
+  <action name="actionList">
+   <property name="text">
+    <string>List</string>
+   </property>
+  </action>
+  <action name="actionImport_Renaem_Pairs">
+   <property name="text">
+    <string>Import Renaem-Pairs</string>
+   </property>
+  </action>
+  <action name="actionDebug_New_Name">
+   <property name="text">
+    <string>Debug New Name</string>
+   </property>
+  </action>
+  <action name="actionReset_All_Remaining_Criteria">
+   <property name="text">
+    <string>Reset All Remaining Criteria</string>
+   </property>
+  </action>
+  <action name="actionRevert_All_Criteria_to_Last_Saved">
+   <property name="text">
+    <string>Revert All Criteria to Last Saved</string>
+   </property>
+  </action>
+  <action name="actionPreview">
+   <property name="text">
+    <string>Preview</string>
+   </property>
+  </action>
+  <action name="actionRename">
+   <property name="text">
+    <string>Rename</string>
+   </property>
+  </action>
+  <action name="actionUndo_Rename">
+   <property name="text">
+    <string>Undo Rename</string>
+   </property>
+  </action>
+  <action name="actionCreate_Undo_Batchfile">
+   <property name="text">
+    <string>Create Undo Batchfile</string>
+   </property>
+  </action>
+  <action name="actionShow_Gridlines">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Show Gridlines</string>
+   </property>
+  </action>
+  <action name="actionShow_Icons">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Show Icons</string>
+   </property>
+  </action>
+  <action name="actionSelect_Columns">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Select Columns ...</string>
+   </property>
+  </action>
+  <action name="actionShow_Picture_Viewer">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Show Picture Viewer</string>
+   </property>
+  </action>
+  <action name="actionAutofill_All_Columns">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Autofill All Columns</string>
+   </property>
+  </action>
+  <action name="actionSet_Content_of_Custom_Column">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Set Content of Custom Column</string>
+   </property>
+  </action>
+  <action name="actionExpand_File_List">
+   <property name="text">
+    <string>Expand File List</string>
+   </property>
+  </action>
+  <action name="actionMaximize_File_List">
+   <property name="text">
+    <string>Maximize File List</string>
+   </property>
+  </action>
+  <action name="actionNew_Name_OK">
+   <property name="text">
+    <string>New Name OK ...</string>
+   </property>
+  </action>
+  <action name="actionNew_Name_Invalid">
+   <property name="text">
+    <string>New Name Invalid ...</string>
+   </property>
+  </action>
+  <action name="actionActive_Criteria">
+   <property name="text">
+    <string>Active Criteria ...</string>
+   </property>
+  </action>
+  <action name="actionHighlish_Active_Criteria">
+   <property name="text">
+    <string>Highlish Active Criteria</string>
+   </property>
+  </action>
+  <action name="actionUse_Larger_Font">
+   <property name="text">
+    <string>Use Larger Font</string>
+   </property>
+  </action>
+  <action name="actionUse_Smaller_Font">
+   <property name="text">
+    <string>Use Smaller Font</string>
+   </property>
+  </action>
+  <action name="actionReset">
+   <property name="text">
+    <string>Reset</string>
+   </property>
+  </action>
+  <action name="actionLogical_Sorting">
+   <property name="text">
+    <string>Logical Sorting</string>
+   </property>
+  </action>
+  <action name="actionGroup_Affected_Files">
+   <property name="text">
+    <string>Group Affected Files</string>
+   </property>
+  </action>
+  <action name="actionSort_Files_and_Folders_Together">
+   <property name="text">
+    <string>Sort Files and Folders Together</string>
+   </property>
+  </action>
+  <action name="actionBytes">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Bytes</string>
+   </property>
+  </action>
+  <action name="actionKilobytes">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Kilobytes</string>
+   </property>
+  </action>
+  <action name="actionMegabytes">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Megabytes</string>
+   </property>
+  </action>
+  <action name="actionGigabytes">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Gigabytes</string>
+   </property>
+  </action>
+  <action name="actionMixed">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Mixed</string>
+   </property>
+  </action>
+  <action name="actionSave_on_Exit">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Save on Exit</string>
+   </property>
+  </action>
+  <action name="actionSelect_Pathname">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Store Pathname</string>
+   </property>
+  </action>
+  <action name="actionEmpty">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Empty</string>
+   </property>
+  </action>
+  <action name="actionEmpty_2">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Empty</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
