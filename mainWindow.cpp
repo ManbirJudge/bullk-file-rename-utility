@@ -1,6 +1,12 @@
 #include "mainWindow.h"
 #include "./ui_mainWindow.h"
 
+struct SelectedFile {
+    std::string filePath;
+    std::string fileName;
+    bool folder = false;
+};
+
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
@@ -130,7 +136,101 @@ void MainWindow::onCurrentDirectoryTableDoubleClicked(QModelIndex index) {
 }
 
 void MainWindow::onRenameBtnCLicked() {
-    // TODO: implement the most important fuction, renaming files
+    // getting the selected files paths
+    QList<QModelIndex> selectedIndexes = ui->currentDirectoryTable->selectionModel()->selectedIndexes();
+
+    std::vector<int> selectedRows;
+    std::vector<SelectedFile> selectedFiles;
+    std::vector<std::string> renamedFiles;
+
+    for (QModelIndex selectedIndex : selectedIndexes) {
+        selectedRows.push_back(selectedIndex.row());
+
+        SelectedFile selectedFile;
+
+        selectedFile.filePath = ui->currentDirectoryTable->model()->data(selectedIndex, 2009).toString().toStdString();
+        selectedFile.fileName = selectedFile.filePath.substr(selectedFile.filePath.find_last_of('\\') + 1, selectedFile.filePath.length());
+
+        selectedFiles.push_back(selectedFile);
+    }
+
+    // getting rename options (from ui): TODO
+    QString regexMatch = ui->regExMatchLineEdit->text();
+    QString regexReplace = ui->regExReplaceLineEdit->text();
+    bool regexIncludeExtension = ui->regExIncExtCheck->isChecked();
+
+    QString nameType = ui->nameTypeCombo->currentText();
+
+    QString wordToReplace = ui->replaceLineEdit->text();
+    QString wordToReplaceWith = ui->replaceWithLineEdit->text();
+    bool replaceMatchCase = ui->replaceMathCaseCheck->isChecked();
+    bool replaceFirst = ui->replaceFirstCheck->isChecked();
+
+    QString caseType = ui->caseTypeCombo->currentText();
+    QString caseException = ui->caseExceptionEdit->text();
+
+    int removeFirstN = ui->removeFirstNSpin->value();
+    int removeLastN = ui->removeLastNSpin->value();
+    int removeFrom = ui->removeFromSpin->value();
+    int removeTo = ui->removeToSpin->value();
+    QString charsToRemove = ui->removeCharsLineEdit->text();
+    QString removeCropType = ui->removeCropCombo->currentText();
+    QString removeCropText = ui->removeCropEdit->text();
+    bool removeDigits = ui->removeDigitsCheck->isChecked();
+    bool removeHigh = ui->removeHighCheck->isChecked();
+    bool removeTrim = ui->removeTrimCheck->isChecked();
+    bool removeDOrS = ui->removeDSCheck->isChecked();
+    bool removeAccents = ui->removeAccentCheck->isChecked();
+    bool removeChars = ui->removeCharsCheck->isChecked();
+    bool removeSymbols = ui->removeSymbolsCheck->isChecked();
+    QString removeLeadDots = ui->removeLeadDotsCombo->currentText();
+
+    QString copyMovePartsFromType = ui->moveCopyPartsCombo_1->currentText();
+    int copyMovePartsFrom = ui->moveCopyPartsSpin_1->value();
+    QString copyMovePartsToType = ui->moveCopyPartsCombo_2->currentText();
+    int copyMovePartsTo = ui->moveCopyPartsSpin_2->value();
+    QString copyMovePartsSeperation = ui->moveCopyPartsSepEdit->text();
+
+    QString addPrefix = ui->addPrefixEdit->text();
+    QString addInsert = ui->addInsertEdit->text();
+    int addInsertPos = ui->addAtPosSpin->value();
+    QString addSuffix = ui->addSuffixEdit->text();
+    bool addWordSpace = ui->addWordSpaceCheck->isChecked();
+
+    QString autoDateMode = ui->autoDateModeCombo->currentText();
+    QString autoDateType = ui->autoDateTypeCombo->currentText();
+    int autoDateFormatIndex = ui->autoDateFmtCombo->currentIndex();
+    QString autoDateSeperation = ui->autoDateSepEdit->text();
+    QString autoDateSegmentation = ui->autoDateSegEdit->text();
+    QString autoDateCustomFormat = ui->autoDateCustomEdit->text();
+    bool autoDateCent = ui->autoDateCentCheck->isChecked();
+
+    QString appendFolderNameType = ui->appendFolderNameCombo->currentText();
+    QString appendFolderNameSeperation = ui->appendFolderNameSepEdit->text();
+
+    QString numberingMode = ui->numberingModeCombo->currentText();
+    int numberingStart = ui->numberingStartSpin->value();
+    int numberingIncrement = ui->numberingIncrSpin->value();
+    int numberingPadding = ui->numberingPadSpin->value();
+    QString numberingSeperation = ui->numberingSepEdit->text();
+    QString numberingType = ui->numberingTypeCombo->currentText();
+    QString numberCase = ui->numberingCaseCombo->currentText();
+
+    QString extensionType = ui->extensionCombo->currentText();
+
+    // calculating renamed file names
+    int currentNumberingValue = numberingStart;
+
+    for (size_t i {}; i < selectedFiles.size(); i++)
+    {
+        SelectedFile selectFile = selectedFiles.at(i);
+
+        // ---------- (1) Regex
+
+        // ---------- (2) Name
+    }
+
+    // actualling renaming the files in the system: TODO
 }
 
 MainWindow::~MainWindow()
