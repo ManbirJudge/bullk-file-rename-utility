@@ -39,6 +39,8 @@ public slots:
     void onDirectoryTreeViewClicked(QModelIndex index);
     void onCurrentDirectoryTableDoubleClicked(QModelIndex index);
 
+    void onRenameBtnCLicked();
+
 private:
     QFileSystemModel *directoryModel = new QFileSystemModel();
     CurrentDirectoryTableModel *currentDirectoryModel = new CurrentDirectoryTableModel();

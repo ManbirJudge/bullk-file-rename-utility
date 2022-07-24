@@ -23,6 +23,7 @@ set(PROJECT_SOURCES
         currentDirectoryTableModel.h
         currentDirectoryTableModel.cpp
 
+        Utils.h
         Utils.cpp
 )
 

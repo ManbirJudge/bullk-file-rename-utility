@@ -82,6 +82,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
         this,
         SLOT(onCurrentDirectoryTableDoubleClicked(QModelIndex))
     );
+
+    connect(
+        ui->renameBtn,
+        SIGNAL(clicked()),
+        this,
+        SLOT(onRenameBtnCLicked())
+    );
 }
 
 void MainWindow::onCurrentLinePathEditReturnPressed() {
@@ -120,6 +127,10 @@ void MainWindow::onCurrentDirectoryTableDoubleClicked(QModelIndex index) {
 
         ui->currentDirectoryTable->setModel(new CurrentDirectoryTableModel(currentPath.c_str()));
     }
+}
+
+void MainWindow::onRenameBtnCLicked() {
+    // TODO: implement the most important fuction, renaming files
 }
 
 MainWindow::~MainWindow()
