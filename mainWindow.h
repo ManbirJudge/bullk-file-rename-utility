@@ -19,14 +19,14 @@ class MainWindow : public QMainWindow
 
     QStringList dateFormats = {
         "%d-%m-%y",
-        "%d-%m-%y %H:%M",
-        "%d-%m-%y %H:%M:%S",
+        "%d-%m-%y %H-%M",
+        "%d-%m-%y %H-%M-%S",
         "%m-%d-%y",
-        "%m-%d-%y %H:%M",
-        "%m-%d-%y %H:%M:%S",
+        "%m-%d-%y %H-%M",
+        "%m-%d-%y %H-%M-%S",
         "%y-%m-%d",
-        "%y-%m-%d %H:%M",
-        "%y-%m-%d %H:%M:%S",
+        "%y-%m-%d %H-%M",
+        "%y-%m-%d %H-%M-%S",
         "Custom"
     };
 

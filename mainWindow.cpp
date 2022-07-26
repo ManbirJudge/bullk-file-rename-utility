@@ -3,8 +3,8 @@
 
 struct SelectedFile
 {
-    std::string filePath;
-    std::string fileName;
+    QString filePath;
+    QString fileName;
     bool folder = false;
 };
 
@@ -139,19 +139,23 @@ void MainWindow::onRenameBtnCLicked()
     // getting the selected files paths
     QList<QModelIndex> selectedIndexes = ui->currentDirectoryTable->selectionModel()->selectedIndexes();
 
-    std::vector<int> selectedRows;
+    QList<int> selectedRows;
     std::vector<SelectedFile> selectedFiles;
     std::vector<SelectedFile> renamedFiles;
 
     for (QModelIndex selectedIndex : selectedIndexes)
     {
+        if (selectedRows.indexOf(selectedIndex.row()) != -1) {
+            continue;
+        }
+
         selectedRows.push_back(selectedIndex.row());
 
         SelectedFile selectedFile;
 
-        selectedFile.filePath = ui->currentDirectoryTable->model()->data(selectedIndex, 2009).toString().toStdString();
-        selectedFile.fileName = selectedFile.filePath.substr(selectedFile.filePath.find_last_of('\\') + 1, selectedFile.filePath.length());
-        selectedFile.folder = isDir(selectedFile.filePath);
+        selectedFile.filePath = ui->currentDirectoryTable->model()->data(selectedIndex, 2009).toString();
+        selectedFile.fileName = QString(selectedFile.filePath.toStdString().substr(selectedFile.filePath.toStdString().find_last_of('\\') + 1, selectedFile.filePath.length()).c_str());
+        selectedFile.folder = isDir(selectedFile.filePath.toStdString());
 
         selectedFiles.push_back(selectedFile);
     }
@@ -177,6 +181,7 @@ void MainWindow::onRenameBtnCLicked()
     int removeFrom = ui->removeFromSpin->value();
     int removeTo = ui->removeToSpin->value();
     QString charsToRemove = ui->removeCharsLineEdit->text();
+    QString wordsToRemove = ui->removeWordsLineEdit->text();
     QString removeCropType = ui->removeCropCombo->currentText();
     QString removeCropText = ui->removeCropEdit->text();
     bool removeDigits = ui->removeDigitsCheck->isChecked();
@@ -186,7 +191,7 @@ void MainWindow::onRenameBtnCLicked()
     bool removeAccents = ui->removeAccentCheck->isChecked();
     bool removeChars = ui->removeCharsCheck->isChecked();
     bool removeSymbols = ui->removeSymbolsCheck->isChecked();
-    QString removeLeadDots = ui->removeLeadDotsCombo->currentText();
+    int removeLeadDotsIndex = ui->removeLeadDotsCombo->currentIndex();
 
     QString copyMovePartsFromType = ui->moveCopyPartsCombo_1->currentText();
     int copyMovePartsFrom = ui->moveCopyPartsSpin_1->value();
@@ -200,8 +205,8 @@ void MainWindow::onRenameBtnCLicked()
     QString addSuffix = ui->addSuffixEdit->text();
     bool addWordSpace = ui->addWordSpaceCheck->isChecked();
 
-    QString autoDateMode = ui->autoDateModeCombo->currentText();
-    QString autoDateType = ui->autoDateTypeCombo->currentText();
+    int autoDateModeIndex = ui->autoDateModeCombo->currentIndex();
+    int autoDateTypeIndex = ui->autoDateTypeCombo->currentIndex();
     int autoDateFormatIndex = ui->autoDateFmtCombo->currentIndex();
     QString autoDateSeperation = ui->autoDateSepEdit->text();
     QString autoDateSegmentation = ui->autoDateSegEdit->text();
@@ -224,7 +229,7 @@ void MainWindow::onRenameBtnCLicked()
     // calculating renamed file names
     int currentNumberingValue = numberingStart;
 
-    std::regex fileRenameRegex(regexMatch.toStdString());
+    QRegularExpression regex(regexMatch);
 
     for (size_t i{}; i < selectedFiles.size(); i++)
     {
@@ -235,23 +240,22 @@ void MainWindow::onRenameBtnCLicked()
             continue;
         }
 
-        // ---------- (1) Regex
-        std::string name = selectedFile.fileName.substr(0, selectedFile.fileName.find_last_of('.'));
-        std::string ext = selectedFile.fileName.substr(selectedFile.fileName.find_last_of('.'), -1);
+        // -------------------- (1) Regex
+        QString name = selectedFile.fileName.mid(0, selectedFile.fileName.lastIndexOf('.'));
+        QString ext = selectedFile.fileName.mid(selectedFile.fileName.lastIndexOf('.'), -1);
 
         if (regexIncludeExtension)
         {
-            std::regex_replace(selectedFile.fileName, fileRenameRegex, regexReplace.toStdString());
+            selectedFile.fileName = selectedFile.fileName.replace(regex, regexReplace);
         }
         else
         {
-            std::regex_replace(name, fileRenameRegex, regexReplace.toStdString());
-            selectedFile.fileName = name + ext;
+            selectedFile.fileName = name.replace(regex, regexReplace) + ext;
         }
 
-        // ---------- (2) Name
-        name = selectedFile.fileName.substr(0, selectedFile.fileName.find_last_of('.'));
-        ext = selectedFile.fileName.substr(selectedFile.fileName.find_last_of('.'), -1);
+        // -------------------- (2) Name
+        name = selectedFile.fileName.mid(0, selectedFile.fileName.lastIndexOf('.'));
+        ext = selectedFile.fileName.mid(selectedFile.fileName.lastIndexOf('.'), -1);
 
         switch (nameTypeIndex)
         {
@@ -263,7 +267,7 @@ void MainWindow::onRenameBtnCLicked()
             break;
 
         case 2:
-            selectedFile.fileName = nameFixed.toStdString() + ext;
+            selectedFile.fileName = nameFixed + ext;
             break;
 
         case 3:
@@ -272,11 +276,22 @@ void MainWindow::onRenameBtnCLicked()
             break;
         }
 
-        // ---------- (3) Replace
+        // -------------------- (3) Replace
+        name = selectedFile.fileName.mid(0, selectedFile.fileName.lastIndexOf('.'));
+        ext = selectedFile.fileName.mid(selectedFile.fileName.lastIndexOf('.'), -1);
 
-        // ---------- (4) Case
-        name = selectedFile.fileName.substr(0, selectedFile.fileName.find_last_of('.'));
-        ext = selectedFile.fileName.substr(selectedFile.fileName.find_last_of('.'), -1);
+        if (replaceMatchCase)
+        {
+            selectedFile.fileName = name.replace(wordToReplace, wordToReplaceWith, Qt::CaseSensitive) + ext;
+        }
+        else
+        {
+            selectedFile.fileName = name.replace(wordToReplace, wordToReplaceWith, Qt::CaseInsensitive) + ext;
+        }
+
+        // -------------------- (4) Case
+        name = selectedFile.fileName.mid(0, selectedFile.fileName.lastIndexOf('.'));
+        ext = selectedFile.fileName.mid(selectedFile.fileName.lastIndexOf('.'), -1);
 
         switch (caseTypeIndex)
         {
@@ -286,37 +301,13 @@ void MainWindow::onRenameBtnCLicked()
         }
         case 1:
         {
-            // --------- IDK ---------
-            char *tempName = strdup(name.c_str());
-            unsigned char *tptr = (unsigned char *) tempName;
-            while (*tptr)
-            {
-                *tptr = std::tolower(*tptr);
-                tptr++;
-            }
-            // ----------------------
-
-            selectedFile.fileName = std::string(tempName) + ext;
-            free(tempName);
+            selectedFile.fileName = name.toLower() + ext;
             break;
         }
 
         case 2:
         {
-
-            // --------- IDK ---------
-            char *tempName = strdup(name.c_str());
-            unsigned char *tptr = (unsigned char *) tempName;
-            while (*tptr)
-            {
-                *tptr = std::toupper(*tptr);
-                tptr++;
-            }
-            // ----------------------
-
-            selectedFile.fileName = std::string(tempName) + ext;
-            free(tempName);
-
+            selectedFile.fileName = name.toUpper() + ext;
             break;
         }
         case 3:
@@ -331,24 +322,173 @@ void MainWindow::onRenameBtnCLicked()
         }
         case 5:
         {
-            // TODO: Implement enhancded sentence case
+            // TODO: Implement enhancded title case
             break;
         }
         }
 
-        // ---------- (5) Remove
+        // -------------------- (5) Remove
+        name = selectedFile.fileName.mid(0, selectedFile.fileName.lastIndexOf('.'));
+        ext = selectedFile.fileName.mid(selectedFile.fileName.lastIndexOf('.'), -1);
 
-        // ---------- (6) Move/copy parts
+        if (removeFirstN > 0)
+        {
+            name = name.mid(removeFirstN, -1);
+        }
+        if (removeLastN > 0)
+        {
+            name = name.mid(0, -removeLastN);
+        }
 
-        // ---------- (7) Add
+        if (removeFrom > 0 && removeTo > 0 && removeFrom < removeTo) {
+            name = name.mid(0, removeFrom - 1) + name.mid(removeTo, -1);
+        }
 
-        // ---------- (8) Autodate
+        for (QString chr : charsToRemove.split(' ')) {  // TODO: add a check to see if all the words are actually characters meaning have length of 1 and 1 only
+            name = name.replace(chr, "");
+        }
+        for (QString word : wordsToRemove.split(' ')) {
+            name = name.replace(word, "");
+        }
 
-        // ---------- (9) Append folder name
+        if (removeDigits) {
+            name = name.replace(QRegularExpression("[0-9]+"), "");
+        }
+        if (removeHigh) {
+            name = name.replace(QRegularExpression("[A-Z]+"), "");
+        }
+        if (removeTrim) {
+            // only remove trailing whitespace
+            name = name.trimmed();
+        }
+        if (removeDOrS) {
+            name = name.replace("  ", " ");
+        }
+        if (removeAccents) {
+            name = name.normalized(QString::NormalizationForm_KD);
+        }
+        if (removeChars) {
+            name = name.replace(QRegularExpression("[a-zA-Z]+"), "");
+        }
+        if (removeSymbols) {
+            name = name.replace(QRegularExpression("[\\W]"), "");
+        }
 
-        // ---------- (10) Numbering
+        switch (removeLeadDotsIndex)
+        {
+        case 0:
+        {
+            break;
+        }
+        case 1:
+        {
+            name = name.replace('.', "");
+            break;
+        }
+        case 2:
+        {
+            name = name.replace("..", "");
+            break;
+        }
+        case 3:
+        {
+            name = name.replace('.', "");
+            name = name.replace("..", "");
+            break;
+        }
+        }
 
-        // ---------- (11) Extension
+        selectedFile.fileName = name + ext;
+
+        // -------------------- (6) Move/copy parts: TODO
+
+        // -------------------- (7) Add
+        name = selectedFile.fileName.mid(0, selectedFile.fileName.lastIndexOf('.'));
+        ext = selectedFile.fileName.mid(selectedFile.fileName.lastIndexOf('.'), -1);
+
+        QString space = "";
+        if (addWordSpace) {
+            space = " ";
+        }
+
+        name = addPrefix + space + name;
+
+        if (addInsertPos != 0) {
+            name = name.mid(0, addInsertPos - 1) + space + addInsert + space + name.mid(addInsertPos - 1, -1);
+        }
+        name = name + space + addSuffix;
+
+        selectedFile.fileName = name + ext;
+
+        // -------------------- (8) Autodate
+        name = selectedFile.fileName.mid(0, selectedFile.fileName.lastIndexOf('.'));
+        ext = selectedFile.fileName.mid(selectedFile.fileName.lastIndexOf('.'), -1);
+
+        if (autoDateModeIndex != 0) {
+            QString date;
+            QString dateFormat;
+
+            // getting date format
+            QString _ = MainWindow::dateFormats[autoDateFormatIndex];
+
+            if (_ == "Custom")
+            {
+                dateFormat = autoDateCustomFormat;
+            }
+            else
+            {
+                dateFormat = _.replace("-", autoDateSegmentation);
+                if (autoDateCent) dateFormat.replace("%y", "%Y");
+            }
+
+            // getting date
+            struct stat fStat;
+            stat(selectedFile.filePath.toStdString().c_str(), &fStat);
+
+            switch (autoDateTypeIndex)
+            {
+            case 0:
+            {
+                date = getStringTime(fStat.st_ctime, dateFormat.toStdString()).c_str();
+                break;
+            }
+            case 1:
+            {
+                date = getStringTime(fStat.st_mtime, dateFormat.toStdString()).c_str();
+                break;
+            }
+            case 2:
+            {
+                date = getStringTime(fStat.st_atime, dateFormat.toStdString()).c_str();
+                break;
+            }
+            case 3:
+            {
+                date = getStringTime(-1, dateFormat.toStdString()).c_str();
+                break;
+            }
+            }
+
+            // dating the name
+            switch (autoDateModeIndex) {
+            case 1: {
+                name = date + autoDateSeperation + name;
+                break;
+            }
+            case 2: {
+                name = name + autoDateSeperation + date;
+                break;
+            }
+            }
+        }
+
+        selectedFile.fileName = name + ext;
+
+        // -------------------- (9) Append folder name
+
+        // -------------------- (10) Numbering
+
+        // -------------------- (11) Extension
 
         // adding file to renamed files list
         renamedFiles.push_back(selectedFile);
@@ -356,7 +496,7 @@ void MainWindow::onRenameBtnCLicked()
 
     // actualling renaming the files in the system: TODO
     for (size_t i{}; i < renamedFiles.size(); i++) {
-        qDebug() << renamedFiles[i].filePath.c_str() << " -> " << renamedFiles[i].fileName.c_str();
+        qDebug() << renamedFiles[i].filePath.toStdString().c_str() << " -> " << renamedFiles[i].fileName.toStdString().c_str();
     }
 }
 

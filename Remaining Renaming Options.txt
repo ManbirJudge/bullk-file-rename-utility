@@ -1,0 +1,14 @@
+1) Regex                 --> Done
+2) Name                  --> Done
+3) Replace               --> Done
+4) Case                  --> Done
+5) Remove                --> Done
+6) Move / Copy Parts
+7) Add                   --> Done
+8) Auto Date             --> Done
+9) Append Folder Name
+10) Numbering
+11) Extension
+12) Filters
+13) Copy/Move to Location
+14) Special

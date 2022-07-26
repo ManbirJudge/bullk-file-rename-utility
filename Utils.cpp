@@ -31,12 +31,3 @@ bool isDir(const std::string path) {
 
 	return buffer.st_mode & S_IFDIR;
 }
-
-std::string *getFileNameAndExt(const std::string file) {
-    static std::string gg[2] = {
-        file.substr(0, file.find_last_of('.')),
-        file.substr(file.find_last_of('.'), file.length())
-    };
-
-    return gg;
-}
