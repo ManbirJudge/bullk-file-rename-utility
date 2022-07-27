@@ -154,7 +154,7 @@ void MainWindow::onRenameBtnCLicked()
         SelectedFile selectedFile;
 
         selectedFile.filePath = ui->currentDirectoryTable->model()->data(selectedIndex, 2009).toString();
-        selectedFile.fileName = QString(selectedFile.filePath.toStdString().substr(selectedFile.filePath.toStdString().find_last_of('\\') + 1, selectedFile.filePath.length()).c_str());
+        selectedFile.fileName = QString(selectedFile.filePath.toStdString().substr(selectedFile.filePath.toStdString().find_last_of('/') + 1, selectedFile.filePath.length()).c_str());
         selectedFile.folder = isDir(selectedFile.filePath.toStdString());
 
         selectedFiles.push_back(selectedFile);
@@ -164,6 +164,8 @@ void MainWindow::onRenameBtnCLicked()
     QString regexMatch = ui->regExMatchLineEdit->text();
     QString regexReplace = ui->regExReplaceLineEdit->text();
     bool regexIncludeExtension = ui->regExIncExtCheck->isChecked();
+    // bool regexSimple = ui->regExSimpleCheck->isChecked();
+    // bool regexV2 = ui->regExv2CheckBox->isChecked();
 
     int nameTypeIndex = ui->nameTypeCombo->currentIndex();
     QString nameFixed = ui->fixedNameEdit->text();
@@ -171,10 +173,10 @@ void MainWindow::onRenameBtnCLicked()
     QString wordToReplace = ui->replaceLineEdit->text();
     QString wordToReplaceWith = ui->replaceWithLineEdit->text();
     bool replaceMatchCase = ui->replaceMathCaseCheck->isChecked();
-    bool replaceFirst = ui->replaceFirstCheck->isChecked();
+    // bool replaceFirst = ui->replaceFirstCheck->isChecked();
 
     int caseTypeIndex = ui->caseTypeCombo->currentIndex();
-    QString caseException = ui->caseExceptionEdit->text();
+    // QString caseException = ui->caseExceptionEdit->text();
 
     int removeFirstN = ui->removeFirstNSpin->value();
     int removeLastN = ui->removeLastNSpin->value();
@@ -182,8 +184,8 @@ void MainWindow::onRenameBtnCLicked()
     int removeTo = ui->removeToSpin->value();
     QString charsToRemove = ui->removeCharsLineEdit->text();
     QString wordsToRemove = ui->removeWordsLineEdit->text();
-    QString removeCropType = ui->removeCropCombo->currentText();
-    QString removeCropText = ui->removeCropEdit->text();
+    // QString removeCropType = ui->removeCropCombo->currentText();
+    // QString removeCropText = ui->removeCropEdit->text();
     bool removeDigits = ui->removeDigitsCheck->isChecked();
     bool removeHigh = ui->removeHighCheck->isChecked();
     bool removeTrim = ui->removeTrimCheck->isChecked();
@@ -195,7 +197,7 @@ void MainWindow::onRenameBtnCLicked()
 
     QString copyMovePartsFromType = ui->moveCopyPartsCombo_1->currentText();
     int copyMovePartsFrom = ui->moveCopyPartsSpin_1->value();
-    QString copyMovePartsToType = ui->moveCopyPartsCombo_2->currentText();
+    int copyMovePartsToTypeIndex = ui->moveCopyPartsCombo_2->currentIndex();
     int copyMovePartsTo = ui->moveCopyPartsSpin_2->value();
     QString copyMovePartsSeperation = ui->moveCopyPartsSepEdit->text();
 
@@ -213,10 +215,12 @@ void MainWindow::onRenameBtnCLicked()
     QString autoDateCustomFormat = ui->autoDateCustomEdit->text();
     bool autoDateCent = ui->autoDateCentCheck->isChecked();
 
-    QString appendFolderNameType = ui->appendFolderNameCombo->currentText();
+    int appendFolderNameTypeIndex = ui->appendFolderNameCombo->currentIndex();
     QString appendFolderNameSeperation = ui->appendFolderNameSepEdit->text();
+    // int appendFolderNameLevel = ui->appendFolderNameLevelsSpin->value();
 
-    QString numberingMode = ui->numberingModeCombo->currentText();
+    int numberingModeIndex = ui->numberingModeCombo->currentIndex();
+    int numberingInsertAtPos = ui->numberingAtSpin->value();
     int numberingStart = ui->numberingStartSpin->value();
     int numberingIncrement = ui->numberingIncrSpin->value();
     int numberingPadding = ui->numberingPadSpin->value();
@@ -224,7 +228,8 @@ void MainWindow::onRenameBtnCLicked()
     QString numberingType = ui->numberingTypeCombo->currentText();
     QString numberCase = ui->numberingCaseCombo->currentText();
 
-    QString extensionType = ui->extensionCombo->currentText();
+    int extensionTypeIndex = ui->extensionCombo->currentIndex();
+    QString extensionFixed = ui->extensionEdit->text();
 
     // calculating renamed file names
     int currentNumberingValue = numberingStart;
@@ -400,7 +405,39 @@ void MainWindow::onRenameBtnCLicked()
 
         selectedFile.fileName = name + ext;
 
-        // -------------------- (6) Move/copy parts: TODO
+        // -------------------- (6) Move/copy parts
+        name = selectedFile.fileName.mid(0, selectedFile.fileName.lastIndexOf('.'));
+        ext = selectedFile.fileName.mid(selectedFile.fileName.lastIndexOf('.'), -1);
+
+        if (copyMovePartsFromType != "None" && copyMovePartsToTypeIndex != 0) {
+            QString partToBeCopiedOrMoved;
+
+            if (copyMovePartsFromType.endsWith("First n")) {
+                partToBeCopiedOrMoved = name.mid(0, copyMovePartsFrom);
+                if (copyMovePartsFromType.startsWith("Move")) name = name.mid(copyMovePartsFrom, -1);
+            }
+            else if (copyMovePartsFromType.endsWith("Last n")) {
+                partToBeCopiedOrMoved = name.mid(name.length() - copyMovePartsFrom, -1);
+                if (copyMovePartsFromType.startsWith("Move")) name = name.mid(0, name.length() - copyMovePartsFrom);
+            }
+
+            switch (copyMovePartsToTypeIndex) {
+            case 1: {
+                name = partToBeCopiedOrMoved + copyMovePartsSeperation + name;
+                break;
+            }
+            case 2: {
+                name = name + copyMovePartsSeperation + partToBeCopiedOrMoved;
+                break;
+            }
+            case 3: {
+                name = name.mid(0, copyMovePartsToTypeIndex - 1) + copyMovePartsSeperation + partToBeCopiedOrMoved + copyMovePartsSeperation + name.mid(copyMovePartsToTypeIndex - 1, 0);
+                break;
+            }
+            }
+        }
+
+        selectedFile.fileName = name + ext;
 
         // -------------------- (7) Add
         name = selectedFile.fileName.mid(0, selectedFile.fileName.lastIndexOf('.'));
@@ -411,12 +448,9 @@ void MainWindow::onRenameBtnCLicked()
             space = " ";
         }
 
-        name = addPrefix + space + name;
-
-        if (addInsertPos != 0) {
-            name = name.mid(0, addInsertPos - 1) + space + addInsert + space + name.mid(addInsertPos - 1, -1);
-        }
-        name = name + space + addSuffix;
+        if (addPrefix.isEmpty() || addPrefix.isNull()) name = addPrefix + space + name;
+        if (addInsertPos != 0) name = name.mid(0, addInsertPos - 1) + space + addInsert + space + name.mid(addInsertPos - 1, -1);
+        if (addSuffix.isEmpty() || addSuffix.isNull()) name = name + space + addSuffix;
 
         selectedFile.fileName = name + ext;
 
@@ -485,18 +519,143 @@ void MainWindow::onRenameBtnCLicked()
         selectedFile.fileName = name + ext;
 
         // -------------------- (9) Append folder name
+        name = selectedFile.fileName.mid(0, selectedFile.fileName.lastIndexOf('.'));
+        ext = selectedFile.fileName.mid(selectedFile.fileName.lastIndexOf('.'), -1);
+
+        if (appendFolderNameTypeIndex != 0) {
+            QStringList _ = selectedFile.filePath.split("/");
+            QString folderName = _.at(_.size() - 2);
+
+            switch(appendFolderNameTypeIndex)
+            {
+            case 1:
+            {
+                selectedFile.fileName = folderName + appendFolderNameSeperation + name + ext;
+                break;
+            }
+            case 2:
+            {
+                selectedFile.fileName = name + appendFolderNameSeperation + folderName + ext;
+                break;
+            }
+            }
+        }
 
         // -------------------- (10) Numbering
+        name = selectedFile.fileName.mid(0, selectedFile.fileName.lastIndexOf('.'));
+        ext = selectedFile.fileName.mid(selectedFile.fileName.lastIndexOf('.'), -1);
+
+        if (numberingModeIndex != 0) {
+            QString numberingStr;
+
+            if (numberingType.startsWith("Base"))
+            {
+                if (numberingType == "Base 2 (Binary)")
+                {
+                    numberingStr = intToBase(currentNumberingValue, 2).c_str();
+                }
+                else if (numberingType == "Base 8 (Octa)")
+                {
+                    numberingStr = intToBase(currentNumberingValue, 8).c_str();
+                }
+                else if (numberingType == "Base 10 (Decimal)")
+                {
+                    numberingStr = intToBase(currentNumberingValue, 10).c_str();
+                }
+                else if (numberingType == "Base 16 (Hex)")
+                {
+                    numberingStr = intToBase(currentNumberingValue, 16).c_str();
+                }
+                else {
+                    numberingStr = intToBase(currentNumberingValue, numberingType.remove("Base").toInt()).c_str();
+                }
+            }
+            else if (numberingType == "A-Z")
+            {
+
+            }
+            else if (numberingType == "a-z")
+            {
+
+            }
+            else if (numberingType == "Roman Numeral")
+            {
+
+            }
+
+            switch (numberingModeIndex)
+            {
+            case 1:
+            {
+                name = numberingStr + numberingSeperation + name;
+                break;
+            }
+            case 2:
+            {
+                name = name + numberingSeperation + numberingStr ;
+                break;
+            }
+            case 3:
+            {
+                name = numberingStr + numberingSeperation + name + numberingSeperation + numberingStr;
+                break;
+            }
+            case 4:
+            {
+                name = name.mid(0, numberingInsertAtPos - 1) + numberingSeperation + numberingStr + numberingSeperation + name.mid(numberingInsertAtPos, -1);
+                break;
+            }
+            }
+        }
+
+        selectedFile.fileName = name + ext;
 
         // -------------------- (11) Extension
+        name = selectedFile.fileName.mid(0, selectedFile.fileName.lastIndexOf('.'));
+        ext = selectedFile.fileName.mid(selectedFile.fileName.lastIndexOf('.'), -1);
+
+        switch (extensionTypeIndex)
+        {
+        case 0:
+        {
+            break;
+        }
+        case 1: {
+            ext = ext.toLower();
+            break;
+        }
+        case 2: {
+            ext = ext.toUpper();
+            break;
+        }
+        case 3: {
+            // TODO: implement title case
+            break;
+        }
+        case 4: {
+            ext = "." + extensionFixed;
+            break;
+        }
+        case 5: {
+            ext = ext + "." + extensionFixed;
+            break;
+        }
+        case 6: {
+            ext = "";
+            break;
+        }
+        }
+
+        selectedFile.fileName = name + ext;
 
         // adding file to renamed files list
         renamedFiles.push_back(selectedFile);
+        currentNumberingValue += numberingIncrement;
     }
 
     // actualling renaming the files in the system: TODO
     for (size_t i{}; i < renamedFiles.size(); i++) {
-        qDebug() << renamedFiles[i].filePath.toStdString().c_str() << " -> " << renamedFiles[i].fileName.toStdString().c_str();
+        qDebug() << renamedFiles[i].filePath.toStdString().c_str() << " -> " << renamedFiles[i].fileName;
     }
 }
 

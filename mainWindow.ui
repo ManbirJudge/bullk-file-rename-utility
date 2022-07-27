@@ -17,6 +17,9 @@
    <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,2,3">
     <item>
      <widget class="QLabel" name="titleLabel">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
       <property name="styleSheet">
        <string notr="true">padding: 5px 7px;
 
@@ -119,7 +122,7 @@
                <item>
                 <widget class="QCheckBox" name="regExIncExtCheck">
                  <property name="enabled">
-                  <bool>false</bool>
+                  <bool>true</bool>
                  </property>
                  <property name="text">
                   <string>Inc. Ext.</string>
@@ -220,6 +223,9 @@
                </item>
                <item>
                 <widget class="QCheckBox" name="replaceFirstCheck">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
                  <property name="text">
                   <string>First</string>
                  </property>
@@ -244,13 +250,20 @@
              </item>
              <item row="1" column="0">
               <widget class="QLabel" name="label_45">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
                <property name="text">
                 <string>Excep.</string>
                </property>
               </widget>
              </item>
              <item row="1" column="1">
-              <widget class="QLineEdit" name="caseExceptionEdit"/>
+              <widget class="QLineEdit" name="caseExceptionEdit">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+              </widget>
              </item>
             </layout>
            </widget>
@@ -290,13 +303,20 @@
              </item>
              <item row="3" column="0">
               <widget class="QLabel" name="label_8">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
                <property name="text">
                 <string>Crop</string>
                </property>
               </widget>
              </item>
              <item row="3" column="1">
-              <widget class="QComboBox" name="removeCropCombo"/>
+              <widget class="QComboBox" name="removeCropCombo">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+              </widget>
              </item>
              <item row="0" column="2">
               <widget class="QLabel" name="label_9">
@@ -344,8 +364,12 @@
              <item row="2" column="3">
               <widget class="QLineEdit" name="removeWordsLineEdit"/>
              </item>
-             <item row="3" column="3">
-              <widget class="QLineEdit" name="removeCropEdit"/>
+             <item row="3" column="2" colspan="2">
+              <widget class="QLineEdit" name="removeCropEdit">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+              </widget>
              </item>
             </layout>
            </item>
@@ -602,7 +626,7 @@
         <item>
          <widget class="QGroupBox" name="numberingBox">
           <property name="enabled">
-           <bool>false</bool>
+           <bool>true</bool>
           </property>
           <property name="title">
            <string>Numbering (10)</string>
@@ -654,7 +678,7 @@
            <item row="3" column="0">
             <widget class="QLabel" name="label_27">
              <property name="enabled">
-              <bool>false</bool>
+              <bool>true</bool>
              </property>
              <property name="text">
               <string>Break</string>
@@ -685,7 +709,7 @@
            <item row="3" column="1">
             <widget class="QSpinBox" name="numberingBreakSpin">
              <property name="enabled">
-              <bool>false</bool>
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -739,7 +763,7 @@
         <item>
          <widget class="QGroupBox" name="moveCopyPartsBox">
           <property name="enabled">
-           <bool>false</bool>
+           <bool>true</bool>
           </property>
           <property name="title">
            <string>Move / Copy Parts (6)</string>
@@ -790,7 +814,7 @@
         <item>
          <widget class="QGroupBox" name="appendFolderNameBox">
           <property name="enabled">
-           <bool>false</bool>
+           <bool>true</bool>
           </property>
           <property name="title">
            <string>Append Folder Name (9)</string>
@@ -845,7 +869,7 @@
         <item>
          <widget class="QGroupBox" name="extensionBox">
           <property name="enabled">
-           <bool>false</bool>
+           <bool>true</bool>
           </property>
           <property name="title">
            <string>Extension (11)</string>

@@ -31,3 +31,32 @@ bool isDir(const std::string path) {
 
 	return buffer.st_mode & S_IFDIR;
 }
+
+std::string intToBase(int num, int base) {
+//    std::string based;
+
+//    while (num > 0) {
+//        int dig = num % base;
+
+//        if (dig < 10) based += dig;
+//        else based += char('A') + dig - 10;
+
+//        num /= base;
+//    }
+
+//    std::reverse(based.begin(), based.end());
+
+//    return based;
+    std::string result;
+
+    while (num > 0) {
+        int remainder = num % base;
+        num = int(num / base);
+
+        std::stringstream ss;
+        ss << remainder;
+        result += ss.str();
+    }
+
+    return result;
+}

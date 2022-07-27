@@ -102,7 +102,7 @@ QVariant CurrentDirectoryTableModel::data(const QModelIndex &index, int role) co
         }
         case 2009:
         {
-            return QString(CurrentDirectoryTableModel::files[index.row()].c_str());
+            return QString(CurrentDirectoryTableModel::files[index.row()].c_str()).replace("\\", "/");
         }
         default:
         {
