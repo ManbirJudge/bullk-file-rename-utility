@@ -730,7 +730,6 @@ void MainWindow::onRenameBtnCLicked()
     for (size_t i{}; i < renamedFiles.size(); i++) {
         SelectedFile renamedFile = renamedFiles[0];
         bool success = dir.rename(renamedFile.filePath, renamedFile.fileName);
-        qDebug() << success;
     }
 }
 
