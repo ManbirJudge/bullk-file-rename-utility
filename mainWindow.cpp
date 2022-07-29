@@ -294,10 +294,10 @@ void MainWindow::onRenameBtnCLicked()
     int numberingInsertAtPos = ui->numberingAtSpin->value();
     int numberingStart = ui->numberingStartSpin->value();
     int numberingIncrement = ui->numberingIncrSpin->value();
-    int numberingPadding = ui->numberingPadSpin->value();
+    // int numberingPadding = ui->numberingPadSpin->value();
     QString numberingSeperation = ui->numberingSepEdit->text();
     QString numberingType = ui->numberingTypeCombo->currentText();
-    QString numberCase = ui->numberingCaseCombo->currentText();
+    // QString numberCase = ui->numberingCaseCombo->currentText();
 
     int extensionTypeIndex = ui->extensionCombo->currentIndex();
     QString extensionFixed = ui->extensionEdit->text();
@@ -502,7 +502,7 @@ void MainWindow::onRenameBtnCLicked()
                 break;
             }
             case 3: {
-                name = name.mid(0, copyMovePartsToTypeIndex - 1) + copyMovePartsSeperation + partToBeCopiedOrMoved + copyMovePartsSeperation + name.mid(copyMovePartsToTypeIndex - 1, 0);
+                name = name.mid(0, copyMovePartsTo - 1) + copyMovePartsSeperation + partToBeCopiedOrMoved + copyMovePartsSeperation + name.mid(copyMovePartsTo - 1, 0);
                 break;
             }
             }
@@ -725,8 +725,12 @@ void MainWindow::onRenameBtnCLicked()
     }
 
     // actualling renaming the files in the system: TODO
+    QDir dir(ui->currentPathLineEdit->text());
+
     for (size_t i{}; i < renamedFiles.size(); i++) {
-        qDebug() << renamedFiles[i].filePath.toStdString().c_str() << " -> " << renamedFiles[i].fileName;
+        SelectedFile renamedFile = renamedFiles[0];
+        bool success = dir.rename(renamedFile.filePath, renamedFile.fileName);
+        qDebug() << success;
     }
 }
 

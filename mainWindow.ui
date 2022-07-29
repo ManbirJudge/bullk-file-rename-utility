@@ -757,6 +757,9 @@
            </item>
            <item row="5" column="0">
             <widget class="QLabel" name="label_29">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
              <property name="text">
               <string>Case</string>
              </property>
@@ -786,7 +789,11 @@
             <widget class="QComboBox" name="numberingTypeCombo"/>
            </item>
            <item row="5" column="1" colspan="3">
-            <widget class="QComboBox" name="numberingCaseCombo"/>
+            <widget class="QComboBox" name="numberingCaseCombo">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+            </widget>
            </item>
           </layout>
          </widget>
@@ -1331,7 +1338,6 @@
         </property>
         <property name="font">
          <font>
-          <family>Roboto</family>
           <underline>false</underline>
           <kerning>true</kerning>
          </font>
