@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include <QtCore/QDir>
 #include <QtWidgets/qfilesystemmodel.h>
+#include <QFileDialog>
+#include <QDesktopServices>
 #include <regex>
 
 #include "currentDirectoryTableModel.h"
@@ -36,11 +38,15 @@ public:
 
 public slots:
     void onCurrentLinePathEditReturnPressed();
+    void onCurrentPathLevelUpBtnClicked();
+    void onCurrentPathBrowseBtnClicked();
 
     void onDirectoryTreeViewClicked(QModelIndex index);
     void onCurrentDirectoryTableDoubleClicked(QModelIndex index);
 
     void onRenameBtnCLicked();
+
+    void onCheckOutOnGithubBtn();
 
 private:
     QFileSystemModel *directoryModel = new QFileSystemModel();

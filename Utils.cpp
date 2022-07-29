@@ -33,20 +33,7 @@ bool isDir(const std::string path) {
 }
 
 std::string intToBase(int num, int base) {
-//    std::string based;
-
-//    while (num > 0) {
-//        int dig = num % base;
-
-//        if (dig < 10) based += dig;
-//        else based += char('A') + dig - 10;
-
-//        num /= base;
-//    }
-
-//    std::reverse(based.begin(), based.end());
-
-//    return based;
+    const char hexChars[] = {'A', 'B', 'C', 'D', 'C', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
     std::string result;
 
     while (num > 0) {
@@ -54,9 +41,16 @@ std::string intToBase(int num, int base) {
         num = int(num / base);
 
         std::stringstream ss;
-        ss << remainder;
+        if (remainder > 9) {
+            ss << hexChars[remainder - 10];
+        } else {
+            ss << remainder;
+        }
+
         result += ss.str();
     }
+
+    std::reverse(result.begin(), result.end());
 
     return result;
 }

@@ -36,6 +36,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->currentDirectoryTable->setColumnWidth(3, 125);
     ui->currentDirectoryTable->setColumnWidth(4, 125);
 
+    // setting up file system layout splitter
+    // ui->fileSystemSplitter->setSizes(QList<int>{int(ui->fileSystemSplitter->width() * 0.2), int(ui->fileSystemSplitter->width() * 0.8)});
+    ui->fileSystemSplitter->setStretchFactor(1, 4);
+
     // setting up values for dropdowns
     ui->nameTypeCombo->addItems(QStringList{"Keep", "Remove", "Fixed", "Reverse"});
     ui->caseTypeCombo->addItems(QStringList{"Same", "Lower", "Upper", "Title", "Sentence", "Title Enhanced"});
@@ -72,6 +76,17 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
         SIGNAL(returnPressed()),
         this,
         SLOT(onCurrentLinePathEditReturnPressed()));
+    connect(
+        ui->currentPathLevelUpBtn,
+        SIGNAL(clicked()),
+        this,
+        SLOT(onCurrentPathLevelUpBtnClicked()));
+    connect(
+        ui->currentPathBrowseBtn,
+        SIGNAL(clicked()),
+        this,
+        SLOT(onCurrentPathBrowseBtnClicked()));
+
 
     connect(
         ui->directoryTreeView,
@@ -89,6 +104,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
         SIGNAL(clicked()),
         this,
         SLOT(onRenameBtnCLicked()));
+
+    connect(
+        ui->checkOutOnGithubBtn,
+        SIGNAL(clicked()),
+        this,
+        SLOT(onCheckOutOnGithubBtn())
+    );
 }
 
 void MainWindow::onCurrentLinePathEditReturnPressed()
@@ -109,6 +131,52 @@ void MainWindow::onCurrentLinePathEditReturnPressed()
     {
         std::string currentPath = MainWindow::directoryModel->filePath(ui->directoryTreeView->currentIndex()).toStdString();
         ui->currentPathLineEdit->setText(QString(currentPath.c_str()));
+    }
+}
+void MainWindow::onCurrentPathLevelUpBtnClicked() {
+    QString currentPath = ui->currentPathLineEdit->text();
+    QString newPath;
+
+    QStringList currentPathSegments = currentPath.split('/');
+    currentPathSegments.pop_back();
+
+    for (size_t i {}; i < currentPathSegments.size(); i++) {
+        QString currentPathSegment = currentPathSegments.at(i);
+
+        newPath += currentPathSegment;
+        if (i != currentPathSegments.size() - 1 || currentPathSegment.endsWith(':')) newPath += '/';
+    }
+
+    if (pathExists(newPath.toStdString()))
+    {
+        QModelIndex newPathIndex = MainWindow::directoryModel->index(newPath);
+
+        ui->directoryTreeView->setCurrentIndex(newPathIndex);
+        ui->currentPathLineEdit->setText(newPath);
+
+        ui->currentDirectoryTable->setModel(new CurrentDirectoryTableModel(newPath.toStdString().c_str()));
+    }
+}
+void MainWindow::onCurrentPathBrowseBtnClicked() {
+    QFileDialog directoryFileDialog (this);
+
+    directoryFileDialog.setWindowTitle("Selected the Directory");
+    directoryFileDialog.setViewMode(QFileDialog::Detail);
+    directoryFileDialog.setFileMode(QFileDialog::Directory);
+    directoryFileDialog.setOptions(QFileDialog::ShowDirsOnly);
+
+    if (directoryFileDialog.exec()) {
+        QString newPath = directoryFileDialog.selectedFiles()[0];
+
+        if (pathExists(newPath.toStdString()))
+        {
+            QModelIndex newPathIndex = MainWindow::directoryModel->index(newPath);
+
+            ui->directoryTreeView->setCurrentIndex(newPathIndex);
+            ui->currentPathLineEdit->setText(newPath);
+
+            ui->currentDirectoryTable->setModel(new CurrentDirectoryTableModel(newPath.toStdString().c_str()));
+        }
     }
 }
 void MainWindow::onDirectoryTreeViewClicked(QModelIndex index)
@@ -132,6 +200,9 @@ void MainWindow::onCurrentDirectoryTableDoubleClicked(QModelIndex index)
 
         ui->currentDirectoryTable->setModel(new CurrentDirectoryTableModel(currentPath.c_str()));
     }
+}
+void MainWindow::onCheckOutOnGithubBtn() {
+    QDesktopServices::openUrl(QUrl("https://github.com/ManbirJudge/bullk-file-rename-utility.git"));
 }
 
 void MainWindow::onRenameBtnCLicked()

@@ -7,14 +7,14 @@
     <x>0</x>
     <y>0</y>
     <width>1166</width>
-    <height>776</height>
+    <height>805</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Bulk Rename App</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,2,3">
+   <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,1,0,0">
     <item>
      <widget class="QLabel" name="titleLabel">
       <property name="enabled">
@@ -56,25 +56,54 @@
      </layout>
     </item>
     <item>
-     <layout class="QHBoxLayout" name="fileSystemLayout" stretch="1,3">
-      <item>
-       <widget class="QTreeView" name="directoryTreeView">
-        <property name="animated">
-         <bool>false</bool>
-        </property>
-        <property name="headerHidden">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QTreeView" name="currentDirectoryTable">
-        <property name="sortingEnabled">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-     </layout>
+     <widget class="QWidget" name="fileSystemLayout_2" native="true">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_13">
+       <item row="0" column="0">
+        <widget class="QSplitter" name="fileSystemSplitter">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::NoFrame</enum>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="opaqueResize">
+          <bool>true</bool>
+         </property>
+         <property name="handleWidth">
+          <number>4</number>
+         </property>
+         <property name="childrenCollapsible">
+          <bool>false</bool>
+         </property>
+         <widget class="QTreeView" name="directoryTreeView">
+          <property name="animated">
+           <bool>false</bool>
+          </property>
+          <property name="headerHidden">
+           <bool>false</bool>
+          </property>
+         </widget>
+         <widget class="QTreeView" name="currentDirectoryTable">
+          <property name="sortingEnabled">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </widget>
+       </item>
+      </layout>
+     </widget>
     </item>
     <item>
      <layout class="QVBoxLayout" name="controlsLayout" stretch="2,0,1,1">
@@ -615,6 +644,12 @@
                 <iconset>
                  <normalon>C:/Users/manbi/Downloads/help.png</normalon>
                 </iconset>
+               </property>
+               <property name="checkable">
+                <bool>false</bool>
+               </property>
+               <property name="toolButtonStyle">
+                <enum>Qt::ToolButtonTextOnly</enum>
                </property>
               </widget>
              </item>
@@ -1275,154 +1310,81 @@
       </item>
      </layout>
     </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_8">
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="label_47">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="font">
+         <font>
+          <family>Roboto</family>
+          <underline>false</underline>
+          <kerning>true</kerning>
+         </font>
+        </property>
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Made with &lt;/span&gt;&lt;span style=&quot; font-size:18pt; font-weight:700; color:#ff0000;&quot;&gt;♥️&lt;/span&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt; by &lt;/span&gt;&lt;span style=&quot; font-size:12pt; font-weight:700; color:#0055ff;&quot;&gt;Manbir Judge&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="textFormat">
+         <enum>Qt::MarkdownText</enum>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <property name="textInteractionFlags">
+         <set>Qt::TextSelectableByMouse</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="checkOutOnGithubBtn">
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton {
+background-color: #333;
+color: rgb(255, 255, 255);
+alternate-background-color: rgb(38, 38, 38);
+border-radius: 25px;
+background-radius: 25px;
+padding: 6px 15px;
+border-style: outset;
+border-width: 1px;
+border-radius: 5px;
+border-color: #333;
+}</string>
+        </property>
+        <property name="text">
+         <string>Github</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>C:/Users/manbi/Downloads/GitHub-Mark/PNG/GitHub-Mark-Light-120px-plus.png</normaloff>C:/Users/manbi/Downloads/GitHub-Mark/PNG/GitHub-Mark-Light-120px-plus.png</iconset>
+        </property>
+        <property name="flat">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
    </layout>
   </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="enabled">
-    <bool>true</bool>
-   </property>
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>1166</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="defaultUp">
-    <bool>false</bool>
-   </property>
-   <property name="nativeMenuBar">
-    <bool>true</bool>
-   </property>
-   <widget class="QMenu" name="menuFile">
-    <property name="title">
-     <string>File</string>
-    </property>
-    <widget class="QMenu" name="menuFavourties">
-     <property name="title">
-      <string>Favourties</string>
-     </property>
-     <addaction name="actionSave_on_Exit"/>
-     <addaction name="actionSelect_Pathname"/>
-     <addaction name="separator"/>
-     <addaction name="actionEmpty"/>
-    </widget>
-    <widget class="QMenu" name="menuRecent">
-     <property name="title">
-      <string>Recent</string>
-     </property>
-     <addaction name="actionEmpty_2"/>
-    </widget>
-    <addaction name="actionNew"/>
-    <addaction name="actionOpen"/>
-    <addaction name="actionSave"/>
-    <addaction name="actionSave_As"/>
-    <addaction name="separator"/>
-    <addaction name="menuRecent"/>
-    <addaction name="separator"/>
-    <addaction name="menuFavourties"/>
-    <addaction name="separator"/>
-    <addaction name="actionExit"/>
-   </widget>
-   <widget class="QMenu" name="menuActions">
-    <property name="title">
-     <string>Actions</string>
-    </property>
-    <addaction name="actionSelect_All"/>
-    <addaction name="actionDeselect_All"/>
-    <addaction name="actionInvert_Selection"/>
-    <addaction name="actionSelect_from_Clipboard"/>
-    <addaction name="separator"/>
-    <addaction name="actionJump_to_Path"/>
-    <addaction name="separator"/>
-    <addaction name="actionRename_Object_Manually"/>
-    <addaction name="separator"/>
-    <addaction name="actionRefresh_Files"/>
-    <addaction name="actionRefresh_Tree"/>
-    <addaction name="actionShow_Hide_Tree"/>
-    <addaction name="actionZoom"/>
-    <addaction name="separator"/>
-    <addaction name="actionList"/>
-    <addaction name="separator"/>
-    <addaction name="actionImport_Renaem_Pairs"/>
-    <addaction name="separator"/>
-    <addaction name="actionDebug_New_Name"/>
-    <addaction name="separator"/>
-    <addaction name="actionReset_All_Remaining_Criteria"/>
-    <addaction name="actionRevert_All_Criteria_to_Last_Saved"/>
-    <addaction name="actionPreview"/>
-    <addaction name="actionRename"/>
-    <addaction name="separator"/>
-    <addaction name="actionUndo_Rename"/>
-    <addaction name="actionCreate_Undo_Batchfile"/>
-   </widget>
-   <widget class="QMenu" name="menuDisplay_Options">
-    <property name="title">
-     <string>Display Options</string>
-    </property>
-    <widget class="QMenu" name="menuList">
-     <property name="title">
-      <string>List</string>
-     </property>
-     <widget class="QMenu" name="menuShow_File_Sizes_as">
-      <property name="title">
-       <string>Show File Sizes as ...</string>
-      </property>
-      <addaction name="actionBytes"/>
-      <addaction name="actionKilobytes"/>
-      <addaction name="actionMegabytes"/>
-      <addaction name="actionGigabytes"/>
-      <addaction name="actionMixed"/>
-     </widget>
-     <addaction name="actionShow_Gridlines"/>
-     <addaction name="actionShow_Icons"/>
-     <addaction name="menuShow_File_Sizes_as"/>
-     <addaction name="actionShow_Picture_Viewer"/>
-     <addaction name="separator"/>
-     <addaction name="actionSelect_Columns"/>
-     <addaction name="actionAutofill_All_Columns"/>
-     <addaction name="actionSet_Content_of_Custom_Column"/>
-     <addaction name="separator"/>
-     <addaction name="actionExpand_File_List"/>
-     <addaction name="actionMaximize_File_List"/>
-    </widget>
-    <widget class="QMenu" name="menuColours">
-     <property name="title">
-      <string>Colours</string>
-     </property>
-     <addaction name="actionNew_Name_OK"/>
-     <addaction name="actionNew_Name_Invalid"/>
-     <addaction name="actionActive_Criteria"/>
-     <addaction name="actionHighlish_Active_Criteria"/>
-    </widget>
-    <widget class="QMenu" name="menuFont">
-     <property name="title">
-      <string>Font</string>
-     </property>
-     <addaction name="actionUse_Larger_Font"/>
-     <addaction name="actionUse_Smaller_Font"/>
-     <addaction name="actionReset"/>
-    </widget>
-    <widget class="QMenu" name="menuSorting">
-     <property name="title">
-      <string>Sorting</string>
-     </property>
-     <addaction name="actionLogical_Sorting"/>
-     <addaction name="actionGroup_Affected_Files"/>
-     <addaction name="actionSort_Files_and_Folders_Together"/>
-    </widget>
-    <addaction name="menuList"/>
-    <addaction name="menuColours"/>
-    <addaction name="menuFont"/>
-    <addaction name="separator"/>
-    <addaction name="menuSorting"/>
-   </widget>
-   <addaction name="menuFile"/>
-   <addaction name="menuActions"/>
-   <addaction name="menuDisplay_Options"/>
-  </widget>
-  <widget class="QStatusBar" name="statusbar"/>
   <action name="actionNew">
    <property name="text">
     <string>New</string>
